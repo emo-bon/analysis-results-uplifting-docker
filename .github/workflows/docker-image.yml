@@ -37,7 +37,11 @@ jobs:
       - name: Use tag name
         run: echo ${{ steps.get_tag.outputs.TAG_NAME }}
 
+      - name: Disclose the event_name
+        run: echo ${{ github.event_name }}
+
       - name: Build the Docker image and Push it to the registry-namespace indicated in REG_NS
+        if: github.event_name != 'pull_request'
         run: |
           touch .env                                 # make sure we have one to satisfy the build
           export REG_NS="ghcr.io/emo-bon/emobon"     # sets the public scope for these
