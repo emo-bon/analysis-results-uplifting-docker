@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+import os
 from pathlib import Path
 
 from sema.commons.glob import getMatchingGlobPaths
@@ -11,8 +12,10 @@ def _main(
     resultsroot: str | None = None,
 ) -> None:
     resultsroot = resultsroot or rocrateroot
+    sample_mat_id: str = os.environ.get("SAMPLE_MAT_ID")
 
     print("TODO actual implementation ...")
+    print(f"0/ check available {sample_mat_id=} variable")
     print(f"1/ check {rocrateroot} content...")
     print(f"2/ check {templateroot} content...")
     print("3/ run the actual aruplifting via subyt...")

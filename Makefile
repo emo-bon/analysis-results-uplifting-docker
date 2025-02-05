@@ -36,7 +36,7 @@ endif
 
 docker-test: ## Launches local-named variants of the containers/images in docker-compose.yml
 	@echo "launching docker for local test on rocrate in ./tests/data"
-	@docker run --rm --name emo-bon_${PROJECT} --volume ./tests/data:/rocrateroot ${N_TAG}
+	@docker run --rm --name emo-bon_${PROJECT} --volume ./tests/data:/rocrateroot --env SAMPLE_MAT_ID='test_sm_id' ${N_TAG}
 	@echo "todo -- check up the outcome in some way or another"
 
 .venv/touchfile: requirements.txt requirements-dev.txt
