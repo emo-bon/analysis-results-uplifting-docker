@@ -50,16 +50,18 @@ init: .venv/touchfile ## Initializes the python environment for the project
 
 check: ## Checks the code for linting and formatting issues
 	@echo "checking the code for linting and formatting issues"
-	@flake8 .  --exclude ${FLAKE8_EXCLUDE} --ignore=E203,W503
+	@test -d .venv && (. .venv/bin/activate; flake8 .  --exclude ${FLAKE8_EXCLUDE} --ignore=E203,W503 && echo "done.") || : 
+	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 lint-fix: ## Fixes the code for linting and formatting issues
 	@echo "fixing the code for linting and formatting issues"
-	@black .
-	@isort .
+	@test -d .venv && (. .venv/bin/activate; black .; isort .) || :
+	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 test: ## Runs the tests for the project
 	@echo "running the tests for the project"
-	@pytest tests/
+	@test -d .venv && (. .venv/bin/activate; pytest tests/) || :
+	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 clean: ## Cleans the python environment for the project
 	@echo "cleaning the python environment for the project"
