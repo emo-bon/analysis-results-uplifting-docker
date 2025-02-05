@@ -1,13 +1,14 @@
 #! /usr/bin/env python3
-from sema.commons.glob import getMatchingGlobPaths
 from pathlib import Path
+
+from sema.commons.glob import getMatchingGlobPaths
 
 
 def _main(
     *,
     rocrateroot: str = "/rocrateroot",
     templateroot: str = "/arup/templates",
-    resultsroot: str | None = None
+    resultsroot: str | None = None,
 ) -> None:
     resultsroot = resultsroot or rocrateroot
 
