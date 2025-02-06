@@ -139,4 +139,10 @@ $ make test                     # --> assure local (docker-less) operation
 $ make docker-build docker-test # --> assure docker-wrapped operation
 ```
 
+or in one sweep:
+
+```sh
+$ make pr                       # --> assure all PR requirements are met
+```
+
 Thanks for considering to help out. And many happy coding!

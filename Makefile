@@ -8,13 +8,13 @@ N_TAG := ${REG_NS}_${PROJECT}#  - the versionless "name" docker image tag
 V_TAG := ${REG_NS}_${PROJECT}:${BUILD_TAG}# - the full docker image tag
 FLAKE8_EXCLUDE := .venv,venv,.git,.tox,dist,build,*.egg-info# - the directories to exclude from flake8 checks
 
-.PHONY: help docker-build docker-push docker-test init check lint-fix test clean
+.PHONY: help docker-build docker-push docker-test init check lint-fix test clean pr
 .DEFAULT_GOAL := help
 
 # +---
 # | general targets
 # +---
-help:  ## Shows this list of available targets and their effect.
+help:  ## [help] Shows this list of available targets and their effect.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # +---
@@ -27,24 +27,24 @@ help:  ## Shows this list of available targets and their effect.
 	@touch .venv/touchfile
 
 # usage `touch requirements.txt; make init` to force a re-init if e.g. external dependencies (like sema) have new versions
-init: .venv/touchfile ## [py] Initializes the python environment for the project
+init: .venv/touchfile ## [  py] Initializes the python environment for the project
 
-check: ## [py] Checks the code for linting and formatting issues
+check: ## [  py] Checks the code for linting and formatting issues
 	@echo "checking the code for linting and formatting issues"
 	@test -d .venv && (. .venv/bin/activate; flake8 .  --exclude ${FLAKE8_EXCLUDE} --ignore=E203,W503 && echo "done.") || : 
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
-lint-fix: ## [py] Fixes the code for linting and formatting issues
+lint-fix: ## [  py] Fixes the code for linting and formatting issues
 	@echo "fixing the code for linting and formatting issues"
 	@test -d .venv && (. .venv/bin/activate; black --line-length 80 .; isort .) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
-test: ## [py] Runs the tests for the project
+test: ## [  py] Runs the tests for the project
 	@echo "running the tests for the project"
 	@test -d .venv && (. .venv/bin/activate; SAMPLE_MAT_ID='test_sm_id' pytest tests/) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
-clean: ## [py] Cleans the python environment for the project
+clean: ## [  py] Cleans the python environment for the project
 	@echo "cleaning the python environment for the project"
 	@rm -rf .venv
 	@find . -iname "*.pyc" -delete
@@ -71,3 +71,9 @@ ifeq ($(shell echo ${REG_NS} | egrep '.+/.+'),)  # the 'shell' call is essential
 else
 	docker push ${V_TAG};
 endif
+
+# +---
+# |  contributor check
+# +---
+pr: check test docker-build docker-test ## [ dev] Checks the code and docker-build as being ready for PR-submission.
+	@echo "code is ready for PR"
