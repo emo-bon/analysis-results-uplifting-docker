@@ -122,9 +122,12 @@ def _main(
     templateroot: str = "/arup/templates",
     resultsroot: str | None = None,
 ) -> None:
-    workfile = workfile or os.environ.get("ARUP_WORK", "/arup/work.yml")
-    workfile = Path(workfile)
     rocrateroot = Path(rocrateroot)
+
+    # allow env var to be relative to rocrateroot or absolute
+    workfile = workfile or os.environ.get("ARUP_WORK", "/arup/work.yml")
+    workfile = rocrateroot / Path(workfile)
+
     templateroot = Path(templateroot)
     resultsroot = resultsroot or rocrateroot
 

@@ -21,14 +21,19 @@ fi
 docker run --rm \
   --name emo-bon_${dckr_cnt_nm} \
   --volume ${TMPDIR}:/rocrateroot \
-  --env ARUP_WORK=/rocrateroot/test-work.yml \
+  --env ARUP_WORK=test-work.yml \
   --env SAMPLE_MAT_ID='test_sm_id' \
   ${dckr_img_nm}
 
 #verify the output
-test -f ${TMPDIR}/test-output.ttl
-test -f ${TMPDIR}/test-output2.ttl
-diff ${TMPDIR}/test-output.ttl ${TMPDIR}/test-output2.ttl
+test -f ${TMPDIR}/test-output.ttl || (echo "mising output file" && exit 1)
+test -f ${TMPDIR}/test-output2.ttl || (echo "missing 2nd output file" && exit 1)
+diff ${TMPDIR}/test-output.ttl ${TMPDIR}/test-output2.ttl || (echo "unexpected diff between output files" && exit 1)
+ttl=$(which ttl)  # look for ttl validator
+if [[ -x "${ttl}" ]]; then
+  ${ttl} ${TMPDIR}/test-output.ttl || (echo "ttl validation failed" && exit 1)
+  # no need to check the 2nd file, it is the same as the first
+fi
 
 #say bye and clean up
 echo "test passed, cleaning up"
