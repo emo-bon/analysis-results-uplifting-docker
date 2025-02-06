@@ -60,7 +60,7 @@ lint-fix: ## Fixes the code for linting and formatting issues
 
 test: ## Runs the tests for the project
 	@echo "running the tests for the project"
-	@test -d .venv && (. .venv/bin/activate; pytest tests/) || :
+	@test -d .venv && (. .venv/bin/activate; SAMPLE_MAT_ID='test_sm_id' pytest -s tests/) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 clean: ## Cleans the python environment for the project
