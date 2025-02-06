@@ -36,8 +36,7 @@ endif
 
 docker-test: ## Launches local-named variants of the containers/images in docker-compose.yml
 	@echo "launching docker for local test on rocrate in ./tests/data"
-	@docker run --rm --name emo-bon_${PROJECT} --volume ./tests/data:/rocrateroot --env SAMPLE_MAT_ID='test_sm_id' ${N_TAG}
-	@echo "todo -- check up the outcome in some way or another"
+	@./docker-test.sh ${PROJECT} ${N_TAG}
 
 .venv/touchfile: requirements.txt requirements-dev.txt
 	@echo "initializing the python environment for the project"
@@ -55,12 +54,12 @@ check: ## Checks the code for linting and formatting issues
 
 lint-fix: ## Fixes the code for linting and formatting issues
 	@echo "fixing the code for linting and formatting issues"
-	@test -d .venv && (. .venv/bin/activate; black .; isort .) || :
+	@test -d .venv && (. .venv/bin/activate; black --line-length 80 .; isort .) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 test: ## Runs the tests for the project
 	@echo "running the tests for the project"
-	@test -d .venv && (. .venv/bin/activate; SAMPLE_MAT_ID='test_sm_id' pytest -s tests/) || :
+	@test -d .venv && (. .venv/bin/activate; SAMPLE_MAT_ID='test_sm_id' pytest tests/) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 clean: ## Cleans the python environment for the project
