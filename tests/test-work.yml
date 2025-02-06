@@ -1,0 +1,13 @@
+vars:
+  - name: sample_mat_id
+    value: !resolve "{SAMPLE_MAT_ID}"
+  - name: domain
+    value: https://data.emobon.embrc.eu/
+
+subyt:
+  - in: test-input.csv
+    out: test-output.csv
+    template: test-output.ttl.j2
+  - in: test-input.csv
+    out: test-output2.csv
+    template: test-output.ttl.j2

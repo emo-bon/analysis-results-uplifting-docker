@@ -17,11 +17,13 @@ def load_source(modname, filename):
 def test_cli():
     entrypoint = load_source("entrypoint", "entrypoint.py")
     assert entrypoint._main
+    root = Path(entrypoint.__file__).parent
+
+    print(f"root={root !s}")
     entrypoint._main(
-        rocrateroot="/tmp",
-        templateroot="/tmp",
-        resultsroot="/tmp",
+        workfile=root / "tests/test-work.yml",
+        rocrateroot=root / "tests/data",
+        templateroot=root / "templates",
+        resultsroot=Path("/tmp"),  # todo use an actual temp folder
     )
     print("todo write test to verify results...")
-    print(f"pwd = {Path().absolute()}")
-    print(f"root = {entrypoint.__file__}")
