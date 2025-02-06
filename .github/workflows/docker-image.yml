@@ -65,5 +65,5 @@ jobs:
               make docker-build docker-test
           else
               echo "for main commits we build, test and push"
-              make docker-build docker-test docker-push
+              make docker-push
           fi
