@@ -1,0 +1,11 @@
+vars: # list name,value pairs available for substitution in templates
+  - name: domain
+    value: https://data.emobon.embrc.eu/
+  - name: sample_mat_id
+    value: !resolve "{SAMPLE_MAT_ID}" # use !resolve "text {env_variable} values" to inject from .env
+
+subyt:
+  # multiple jobs can be specified
+  - in: ./somewhere/input-file.csv # ./path/relative/to/rocrateroot-volume/
+    out: ./somewhere/output-file.ttl # ./path/relative/to/rocrateroot-volume/
+    template: test-output.ttl.j2 # ./name/relative/to/templates/
