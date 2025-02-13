@@ -14,7 +14,7 @@ tree ${TMPDIR}
 #check if an image exists and build it if not
 if [[ "$(docker images -q ${dckr_img_nm} 2> /dev/null)" == "" ]]; then
   echo "building the image"
-  docker build -t ${dckr_img_nm}:latest .
+  docker build -t ${dckr_img_nm} .
 fi
 
 #run the built container
