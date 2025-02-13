@@ -6,6 +6,6 @@ vars: # list name,value pairs available for substitution in templates
 
 subyt:
   # multiple jobs can be specified
-  - in: ./somewhere/input-file.csv # ./path/relative/to/rocrateroot-volume/
-    out: ./somewhere/output-file.ttl # ./path/relative/to/rocrateroot-volume/
-    template: test-output.ttl.j2 # ./name/relative/to/templates/
+  - source: ./somewhere/input-file.csv # ./path/relative/to/rocrateroot-volume/
+    sink: ./somewhere/output-file.ttl # ./path/relative/to/rocrateroot-volume/
+    template_name: test-output.ttl.j2 # ./name/relative/to/templates/
