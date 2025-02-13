@@ -59,7 +59,7 @@ docker-build: ## [dckr] Builds the docker-image
 	
 docker-test: ## [dckr] Launches local-named variants of the containers/images in docker-compose.yml
 	@echo "launching docker for local test on rocrate in ./tests/data"
-	@./docker-test.sh ${PROJECT} ${N_TAG}
+	@./docker-test.sh ${PROJECT} ${V_TAG}
 
 # usage `make REG_NS=ghcr.io/emob-bon/emobon docker-build` to push images to github-container-registry
 docker-push: docker-build docker-test ## [dckr] Builds, tests then pushes the docker-images to ${REG_NS}

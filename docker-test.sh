@@ -14,7 +14,7 @@ tree ${TMPDIR}
 #check if an image exists and build it if not
 if [[ "$(docker images -q ${dckr_img_nm} 2> /dev/null)" == "" ]]; then
   echo "building the image"
-  docker build -t ${dckr_img_nm}:latest .
+  docker build -t ${dckr_img_nm} .
 fi
 
 #run the built container
@@ -33,6 +33,8 @@ ttl=$(which ttl)  # look for ttl validator
 if [[ -x "${ttl}" ]]; then
   ${ttl} ${TMPDIR}/test-output.ttl || (echo "ttl validation failed" && exit 1)
   # no need to check the 2nd file, it is the same as the first
+else
+  echo "**WARN** ttl validator not found, skipping validation guarantee."
 fi
 
 #say bye and clean up

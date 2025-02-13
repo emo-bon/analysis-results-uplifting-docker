@@ -92,25 +92,28 @@ class SubytJobs:
         log.debug(f"found {vars=} @instructions")
         jobs: list[dict] = []
         # run over the subyt instructions, assemble into jobs
-        for subyt in instructions.get("subyt", []):
-            job = {
-                "template_name": subyt["template"],
-                "template_folder": str(self._templateroot.absolute()),
-                "source": self._input_location(subyt.get("in")),
-                "extra_sources": {
-                    name: self._input_location(inp)
-                    for name, inp in subyt.get("extra_sources", {}).items()
-                },
-                "sink": self._output_location(subyt.get("out")),
-                "overwrite_sink": subyt.get("overwrite_sink", True),
-                "allow_repeated_sink_paths": subyt.get(
-                    "allow_repeated_sink_paths", False
-                ),
-                "conditional": subyt.get("conditional", False),
-                "break_on_error": subyt.get("break_on_error", False),
-                "variables": vars,
-                "mode": subyt.get("mode", "it"),
+        for subyt in instructions.get("subyt", {}):
+            if not {"source", "template_name", "sink"} <= set(
+                subyt.keys()
+            ):  # minimal required keys
+                log.warning(
+                    f"subyt instruction {subyt !s} must have at least"
+                    "a source, template_name and sink. Skipping...",
+                )
+                continue
+            # just copy cover all settings from the yml (grow as needed)
+            job = subyt.copy()
+            # then additionally:
+            # 1: add fixed stuff from the arup processing
+            job["template_folder"] = str(self._templateroot.absolute())
+            job["variables"] = vars
+            # 2: resolve paths relative to their respective roots
+            job["source"] = self._input_location(job.get("source"))
+            job["extra_sources"] = {
+                name: self._input_location(inp)
+                for name, inp in job.get("extra_sources", {}).items()
             }
+            job["sink"] = self._output_location(job.get("sink"))
             jobs.append(job)
         return jobs
 

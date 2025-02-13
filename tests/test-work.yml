@@ -5,11 +5,11 @@ vars:
     value: https://data.emobon.embrc.eu/
 
 subyt:
-  - in: test-input.csv
-    out: test-output.ttl
-    template: test-template.ttl
+  - source: test-input.csv
+    sink: test-output.ttl
+    template_name: test-template.ttl
     mode: no-it
-  - in: test-input.csv
-    out: test-output2.ttl
-    template: test-template.ttl
+  - source: test-input.csv
+    sink: test-output2.ttl
+    template_name: test-template.ttl
     mode: no-it
