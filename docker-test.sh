@@ -33,6 +33,8 @@ ttl=$(which ttl)  # look for ttl validator
 if [[ -x "${ttl}" ]]; then
   ${ttl} ${TMPDIR}/test-output.ttl || (echo "ttl validation failed" && exit 1)
   # no need to check the 2nd file, it is the same as the first
+else
+  echo "**WARN** ttl validator not found, skipping validation guarantee."
 fi
 
 #say bye and clean up
