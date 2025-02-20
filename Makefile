@@ -23,7 +23,7 @@ help:  ## [help] Shows this list of available targets and their effect.
 .venv/touchfile: requirements.txt requirements-dev.txt
 	@echo "initializing the python environment for the project"
 	@test -d .venv || python3 -m venv .venv
-	@. .venv/bin/activate; pip install -Ur requirements-dev.txt; pip install -Ur requirements.txt
+	@. .venv/bin/activate; pip install -Ur requirements-dev.txt; pip install -Ur requirements.txt --force-reinstall
 	@touch .venv/touchfile
 
 # usage `touch requirements.txt; make init` to force a re-init if e.g. external dependencies (like sema) have new versions
