@@ -93,7 +93,7 @@ class SubytJobs:
         jobs: list[dict] = []
         # run over the subyt instructions, assemble into jobs
         for subyt in instructions.get("subyt", {}):
-            if not {"source", "template_name", "sink"} <= set(
+            if not {"template_name", "sink"} <= set(
                 subyt.keys()
             ):  # minimal required keys
                 log.warning(
