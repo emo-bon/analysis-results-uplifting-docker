@@ -2,7 +2,9 @@ vars:
   - name: cluster
     value: cluster-01
   - name: genoscopeID
-    value: EMOBON00172
+    value: !resolve "{GENOSCOPE_ID}"
+  - name: ENANumber
+    value: !resolve "{ENA_NR}"
   - name: obs_id
     value: VB
   - name: env_package
@@ -14,27 +16,55 @@ vars:
   - name: my_var_name
     value: !resolve "ref:{SAMPLE_MAT_ID}"
 
+prepare:
+  - input: ./functional-annotation/DBB.merged.summary.go
+    output: ./functional-annotation/DBB.merged.summary.go.csv
+    header: "ID,sub_process,process,abundance"
+  - input: ./functional-annotation/DBB.merged.summary.ips
+    output: ./functional-annotation/DBB.merged.summary.ips.csv
+    header: "Abundance,ID,sequence_domain_region_name"
+  - input: ./functional-annotation/DBB.merged.summary.ko
+    output: ./functional-annotation/DBB.merged.summary.ko.csv
+    header: "Abundance,ID,name"
+  - input: ./functional-annotation/DBB.merged.summary.pfam
+    output: ./functional-annotation/DBB.merged.summary.pfam.csv
+    header: "Abundance,ID,name"
+  - input: ./functional-annotation/DBB.merged.emapper.summary.eggnog
+    output: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+    header: "Abundance,ID,name"
+
 subyt:
-   - source: ./functional-annotation/DBB.merged.summary.go.csv
-     sink: ./products/functional-annotation/GO
-     template_name: go-annotation.ldt.ttl
-     mode: no-it
-   - source: ./functional-annotation/DBB.merged.summary.ips.csv
-     sink: ./products/functional-annotation/IPS
-     template_name: ips-annotation.ldt.ttl
-     mode: no-it
-   - source: ./functional-annotation/DBB.merged.summary.ko.csv
-     sink: ./products/functional-annotation/KEGG
-     template_name: kegg-annotation.ldt.ttl
-     mode: no-it
-   - source: ./functional-annotation/DBB.merged.summary.pfam.csv
-     sink: ./products/functional-annotation/PFAM
-     template_name: pfam-annotation.ldt.ttl
-     mode: no-it
-   - source: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
-     sink: ./products/functional-annotation/EGGNOG
-     template_name: eggnog-annotation.ldt.ttl
-     mode: no-it
+  - extra_sources:
+      go_annotations: ./functional-annotation/DBB.merged.summary.go.csv
+      ips_annotations: ./functional-annotation/DBB.merged.summary.ips.csv
+      kegg_annotations: ./functional-annotation/DBB.merged.summary.ko.csv
+      pfam_annotations: ./functional-annotation/DBB.merged.summary.pfam.csv
+      eggnog_annotations: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+    sink: !resolve ./{GENOSCOPE_ID}/functional-annotation
+    template_name: functional-annotation.ldt.ttl
+    mode: no-it
+  
+  # - source: ./functional-annotation/DBB.merged.summary.go.csv
+  #   sink: ./functional-annotation/GO
+  #   template_name: go-annotation.ldt.ttl
+  #   mode: no-it
+  # - source: ./functional-annotation/DBB.merged.summary.ips.csv
+  #   sink: ./functional-annotation/IPS
+  #   template_name: ips-annotation.ldt.ttl
+  #   mode: no-it
+  # - source: ./functional-annotation/DBB.merged.summary.ko.csv
+  #   sink: ./functional-annotation/KEGG
+  #   template_name: kegg-annotation.ldt.ttl
+  #   mode: no-it
+  # - source: ./functional-annotation/DBB.merged.summary.pfam.csv
+  #   sink: ./functional-annotation/PFAM
+  #   template_name: pfam-annotation.ldt.ttl
+  #   mode: no-it
+  # - source: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+  #   sink: ./functional-annotation/EGGNOG
+  #   template_name: eggnog-annotation.ldt.ttl
+  #   mode: no-it
+  
   #- source: ./test-input.csv
   #  sink: ./test-output.ttl
   #  template_name: test-template.ttl
