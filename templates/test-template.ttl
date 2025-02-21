@@ -5,10 +5,8 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 @prefix dc: <http://purl.org/dc/elements/1.1/>.
 
-{% for _ in sets['_'] -%}
 {{ uritexpand(domain + "countries/{code}", _) | uri }}
     a ex:Country;
     rdfs:label {{ _.label | xsd('@en')}};
     skos:definition {{ _.description | xsd( '@en') }};
-    dc:identifier {{ (my_var_name  + '::' +  loop.index|string  + '::' +  _.code) | xsd('string') }}.
-{% endfor %}
+    dc:identifier {{ (my_var_name  + '::' +  ctrl.index|string  + '::' +  _.code) | xsd('string') }}.
