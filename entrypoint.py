@@ -151,6 +151,8 @@ class SubytJobs:
         """Copies the input file to the output file.
         If a header is provided, it is prepended to the output file."""
         log.debug(f"preparing file {input !s} -> {output !s}")
+        # ensure the parent folder exists
+        Path(output).parent.mkdir(parents=True, exist_ok=True)
         with open(output, "w") as outf:
             if header:
                 outf.write(header.strip() + "\n")
@@ -159,9 +161,10 @@ class SubytJobs:
                 for line in inf:
                     outf.write(line)
 
+
     def _prepare(self):
         """Executes the prepare-file-jobs in the workfile."""
-        log.debug("running the uplifting jobs...")
+        log.debug("running the prepare jobs...")
         prepjob: dict
         for prepjob in self._preparations:
             log.debug(f"running job {prepjob !s}")
