@@ -14,3 +14,4 @@
 @prefix emobon-sequence: <https://data.emobon.embrc.eu/ns/sequence#> .
 @prefix emobon-core: <https://data.emobon.embrc.eu/ns/core#> .
 @prefix emobon-sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
+@prefix emobon-product: <https://data.emobon.embrc.eu/ns/product#> .
