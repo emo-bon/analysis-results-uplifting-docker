@@ -1,15 +1,43 @@
 vars:
-  - name: my_var_name
-    value: !resolve "ref:{SAMPLE_MAT_ID}"
+  - name: cluster
+    value: cluster-01
+  - name: genoscopeID
+    value: EMOBON00172
+  - name: obs_id
+    value: VB
+  - name: env_package
+    value: Wa
+  - name: source_mat_id
+    value: TEST_SOURCE_MAT_ID
   - name: domain
     value: https://data.emobon.embrc.eu/
+  - name: my_var_name
+    value: !resolve "ref:{SAMPLE_MAT_ID}"
 
 subyt:
-  - source: test-input.csv
-    sink: test-output.ttl
-    template_name: test-template.ttl
-    mode: no-it
-  - source: test-input.csv
-    sink: test-output2.ttl
-    template_name: test-template.ttl
-    mode: no-it
+   - source: ./functional-annotation/DBB.merged.summary.go.csv
+     sink: ./products/functional-annotation/GO
+     template_name: go-annotation.ldt.ttl
+     mode: no-it
+   - source: ./functional-annotation/DBB.merged.summary.ips.csv
+     sink: ./products/functional-annotation/IPS
+     template_name: ips-annotation.ldt.ttl
+     mode: no-it
+   - source: ./functional-annotation/DBB.merged.summary.ko.csv
+     sink: ./products/functional-annotation/KEGG
+     template_name: kegg-annotation.ldt.ttl
+     mode: no-it
+   - source: ./functional-annotation/DBB.merged.summary.pfam.csv
+     sink: ./products/functional-annotation/PFAM
+     template_name: pfam-annotation.ldt.ttl
+     mode: no-it
+   - source: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+     sink: ./products/functional-annotation/EGGNOG
+     template_name: eggnog-annotation.ldt.ttl
+     mode: no-it
+  #- source: ./test-input.csv
+  #  sink: ./test-output.ttl
+  #  template_name: test-template.ttl
+  #- source: ./test-input.csv
+  #  sink: ./test-output2.ttl
+  #  template_name: test-template.ttl

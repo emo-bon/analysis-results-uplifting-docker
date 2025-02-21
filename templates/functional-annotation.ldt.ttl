@@ -1,0 +1,105 @@
+{#- 
+Template: functional-annotation.ldt.ttl.j2 
+Description: Template to generate triples from functional-analysis results in context of EMOBON.
+Input/Sets:
+    - "./functional-annotation/DBB.merged.summary.go" as go_annotations
+    - "./functional-annotation/DBB.merged.summary.ips" as ips_annotations
+    - "./functional-annotation/DBB.merged.summary.ko" as kegg_annotations
+    - "./functional-annotation/DBB.merged.summary.pfam" as pfam_annotations
+    - "./DBB.merged.emapper.summary.eggnog" as eggnog_annotations
+
+Variable:
+    - baseref ?
+    - cluster
+    - genoscopeID
+    - ENAnumber --> to discuss
+    - obs_id
+    - env_package
+    - source_mat_id ~ the id of the sample (~see 'name' of the dataset in ro-crate-metadata.json)
+
+-#}
+
+{% include './includes/prefixes.ttl' %}
+
+@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/functional-annotation>
+
+{# GO_annotations #}
+{%- for row in sets['go_annotations'] %}  {# might need to adapt code to return list of unique name/IDs .... ~ unique_pattern ~ though code controlled by Cymon #}
+<#{{row.ID}}> 
+    a emobon-product:FunctionalAnnotation ; 
+    dct:type emobon-product:GO ; 
+
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
+    
+    dct:isPartOf <> ; 
+
+    dct:title {{row.sub_process | xsd('string')}} ; 
+    dct:identifier <https://www.ebi.ac.uk/QuickGO/term/{{row.ID}}> ;
+.
+{%- endfor %}
+
+
+{# InterPro_annotations #}
+{%- for row in sets['ips_annotations'] %}
+<#{{row.ID}}> 
+    a emobon-product:FunctionalAnnotation ; 
+    dct:type emobon-product:InterPro ; 
+
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
+    
+    dct:isPartOf <> ; 
+
+    dct:title {{row['sequence domain/region name'] | xsd('string')}} ;                   {# to check if name works #}
+    dct:identifier <https://www.ebi.ac.uk/interpro/entry/InterPro/{{row.ID}}/> ;
+.
+{%- endfor %}
+
+{# KEGG_annotations #}
+{%- for row in sets['kegg_annotations'] %}
+<#{{row.ID}}> 
+    a emobon-product:FunctionalAnnotation ; 
+    dct:type emobon-product:KEGG ; 
+
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
+    
+    dct:isPartOf <> ; 
+
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier <https://www.genome.jp/dbget-bin/www_bget?{{row.ID}} > ;  
+.
+{%- endfor %}
+
+{# PFAM_annotations #}
+{%- for row in sets['pfam_annotations'] %}
+<#{{row.ID}}> 
+    a emobon-product:FunctionalAnnotation ; 
+    dct:type emobon-product:PFAM ; 
+
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
+    
+    dct:isPartOf <> ; 
+
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier <https://www.ebi.ac.uk/interpro/entry/pfam/{{row.ID}}/> ;
+.
+{%- endfor %}
+
+{# EGGNOG_annotations #}
+{%- for row in sets['eggnog_annotations'] %}
+<#{{row.ID}}> 
+    a emobon-product:FunctionalAnnotation ; 
+    dct:type emobon-product:EGGNOG ; 
+
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
+    
+    dct:isPartOf <> ; 
+
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier <http://eggnog6.embl.de/search/ogs/{{row.ID}}/> ;
+.
+{%- endfor %}
