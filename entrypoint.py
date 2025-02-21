@@ -136,7 +136,8 @@ class SubytJobs:
             job["template_folder"] = str(self._templateroot.absolute())
             job["variables"] = vars
             # 2: resolve paths relative to their respective roots
-            job["source"] = self._input_location(job.get("source"))
+            if "source" in job:
+                job["source"] = self._input_location(job.get("source"))
             job["extra_sources"] = {
                 name: self._input_location(inp)
                 for name, inp in job.get("extra_sources", {}).items()
