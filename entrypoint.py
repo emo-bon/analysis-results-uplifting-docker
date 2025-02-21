@@ -48,20 +48,13 @@ class SubytJobs:
         if not os.access(self._resultsroot, os.W_OK):
             raise PermissionError(f"{self._resultsroot !s} is not writeable")
 
-        self._jobs = self.load_jobs(workfile)
+        self._preparations = []
+        self._jobs = []
+        self._location_mappings = dict()
+
+        self.load_jobs(workfile)
         if len(self._jobs) == 0:
             raise ValueError(f"no jobs found in {workfile !s}")
-
-    def run(self):
-        """Runs the jobs in the workfile."""
-        log.debug("running the jobs...")
-        job: dict
-        for job in self._jobs:
-            log.debug(f"running job {job !s}")
-            subyt = Subyt(**job)
-            subyt.process()
-
-        log.debug("TODO reporting on available sq. valid outputs...")
 
     @staticmethod
     def load_instructions(workfile: Path) -> dict:
@@ -75,27 +68,62 @@ class SubytJobs:
             return yaml.load(yml, Loader=loader)
 
     def _input_location(self, input: str) -> str:
-        return str((self._rocrateroot / input).absolute())
+        abs_input: str = str((self._rocrateroot / input).absolute())
+        # if this desired input is in the prepout mappings, then return that!
+        return self._location_mappings.get(abs_input, abs_input)
+
+    def _prepout_location(self, output: str) -> str:
+        # prepouts need to go to the resultsroot
+        abs_output: str = str((self._resultsroot / output).absolute())
+        # but they will be referenced in the subyt jobs as input
+        abs_input: str = str((self._rocrateroot / output).absolute())
+        # so we add them to the mapping
+        self._location_mappings[abs_input] = abs_output
+        return abs_output
 
     def _output_location(self, output: str) -> str:
         return str((self._resultsroot / output).absolute())
 
-    def load_jobs(self, workfile: Path) -> list[dict]:
+    def load_jobs(self, workfile: Path) -> None:
         """Converts the instructions in the workfile into a list of jobs.
-        These jobs are actually argument-dicts that can
-        simply be passed to the Subyt constructor."""
+        These jobs are grouped into 'preparation' and 'subyt' jobs.
+        The preparation jobs are expressing text/csv manipulations to allow
+        file copy and header inclusion.
+        The subyt jobs are expressing semantic-uplifting tasks producing ttl.
+        These jobs are all actually argument-dicts that can
+        simply be passed to an exuting methos."""
         instructions: dict = SubytJobs.load_instructions(workfile)
         # todo grab the vars from the instructions
-        vars = {
+        vars: dict = {
             var["name"]: var["value"] for var in instructions.get("vars", {})
         }
         log.debug(f"found {vars=} @instructions")
-        jobs: list[dict] = []
+        self._load_prep_jobs(instructions)
+        self._load_subyt_jobs(instructions, vars)
+
+    def _load_prep_jobs(self, instructions: dict) -> None:
+        # run over the prepare instructions, assemble into jobs
+        for prep in instructions.get("prepare", {}):
+            # minimal required keys in job
+            if not {"input", "output"} <= set(prep.keys()):
+                log.warning(
+                    f"prepare instruction {prep !s} must have at least"
+                    "an input and output. Skipping...",
+                )
+                continue
+            # just copy cover all settings from the yml (grow as needed)
+            prepjob = prep.copy()
+            # then additionally:
+            # resolve paths relative to their respective roots
+            prepjob["input"] = self._input_location(prep.get("input"))
+            prepjob["output"] = self._prepout_location(prep.get("output"))
+            self._preparations.append(prepjob)
+
+    def _load_subyt_jobs(self, instructions: dict, vars: dict) -> None:
         # run over the subyt instructions, assemble into jobs
         for subyt in instructions.get("subyt", {}):
-            if not {"source", "template_name", "sink"} <= set(
-                subyt.keys()
-            ):  # minimal required keys
+            # minimal required keys in job
+            if not {"template_name", "sink"} <= set(subyt.keys()):
                 log.warning(
                     f"subyt instruction {subyt !s} must have at least"
                     "a source, template_name and sink. Skipping...",
@@ -108,14 +136,55 @@ class SubytJobs:
             job["template_folder"] = str(self._templateroot.absolute())
             job["variables"] = vars
             # 2: resolve paths relative to their respective roots
-            job["source"] = self._input_location(job.get("source"))
+            if "source" in job:
+                job["source"] = self._input_location(job.get("source"))
             job["extra_sources"] = {
                 name: self._input_location(inp)
                 for name, inp in job.get("extra_sources", {}).items()
             }
             job["sink"] = self._output_location(job.get("sink"))
-            jobs.append(job)
-        return jobs
+            self._jobs.append(job)
+
+    @staticmethod
+    def _prepare_file(
+        *, input: str, output: str, header: str | None = None
+    ) -> None:
+        """Copies the input file to the output file.
+        If a header is provided, it is prepended to the output file."""
+        log.debug(f"preparing file {input !s} -> {output !s}")
+        # ensure the parent folder exists
+        Path(output).parent.mkdir(parents=True, exist_ok=True)
+        with open(output, "w") as outf:
+            if header:
+                outf.write(header.strip() + "\n")
+            with open(input, "r") as inf:
+                # streamingly for large files - move line by line
+                for line in inf:
+                    outf.write(line)
+
+
+    def _prepare(self):
+        """Executes the prepare-file-jobs in the workfile."""
+        log.debug("running the prepare jobs...")
+        prepjob: dict
+        for prepjob in self._preparations:
+            log.debug(f"running job {prepjob !s}")
+            SubytJobs._prepare_file(**prepjob)
+
+    def _subyt(self):
+        log.debug("running the uplifting jobs...")
+        job: dict
+        for job in self._jobs:
+            log.debug(f"running job {job !s}")
+            subyt = Subyt(**job)
+            subyt.process()
+
+        log.debug("TODO reporting on available sq. valid outputs...")
+
+    def run(self):
+        """Runs the jobs in the workfile."""
+        self._prepare()
+        self._subyt()
 
 
 def _main(

@@ -33,6 +33,11 @@ prepare:
     output: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
     header: "Abundance,ID,name"
 
+prepare:
+  - input: test-input.txt
+    output: test-input.csv
+    header: "code,label,description"
+
 subyt:
   - extra_sources:
       go_annotations: ./functional-annotation/DBB.merged.summary.go.csv
