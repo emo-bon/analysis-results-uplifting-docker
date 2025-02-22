@@ -2,63 +2,68 @@
 Template: taxon-info.ldt.ttl.j2 
 Description: Template to generate triples taxonomy-summary data resulting from analysis performed on sample; in context of EMOBON.
 Input:
-    - ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv (or is it ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv?)
-    - 
+    - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv
+    (or is it ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv ?)
+ 
 Variable:
-    - baseref ?
+    - cluster
+    - genoscopeID
+    - ENAnumber
     - obs_id
     - env_package
-    - source_mat_id ~ the id of the sample (~see 'name' of the dataset in ro-crate-metadata.json)
+    - source_mat_id
 -#}
 
+{% if ctrl.isFirst %}
 {% include './includes/prefixes.ttl' %}
 
-@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/taxonomy-summary>
+@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/taxonomy-summary> . 
+
+<http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
+    schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ;
+.
+{%- endif %}
 
 <>
-    a emobon-product:TaxonomySummary ; 
-    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ; 
-    emobon-product:enaNumber {{ENAnumber | xsd("string")}} ; 
+    a emobon-product:TaxonomicAnnotation ; 
+    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    {#- unsure if the other properties in file, 'LSU_rRNA' and 'OTU ID', are relevant #}
+    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
+    emobon-product:otuID {{_.OTU_ID | xsd("integer")}} ; 
+    emobon-product:lsuRNA {{_.LSU_rRNA | xsd("double")}} ; 
 
-    emobon-product:identifiedTaxa <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
-    {#- other properties in file: 'LSU_rRNA', 'OTU ID'; not sure if relevant... #}
+    dct:isPartOf <> ; 
 .
 
-<http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> .
-    {# potentially for-loop needed --> iter mode different between lines 18-25 and 27-end !!#}
-    {%- if _.taxonomy %}
-    sosa:isSampleOf <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}>
-    {%- endif %} 
-.
-
+{%- if _.taxid %}
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}>
-    a ro:Taxon , dct:Taxon , sosa:FeatureOfInterest ;
+    a dct:Taxon, schema:Taxon ;
         {%- set taxonomy_array = _.taxonomy.split(';') %}
-        {% set taxon_item = taxonomy_array[-1] %}
-        {% set taxon_rank_name = taxon_item.split('__') %}
-        {% set taxon_name = taxon_rank_name[-1] %}
-        {% set taxon_rank = taxon_rank_name[-2] %}
-        
+        {%- set taxon_item = taxonomy_array[-1] %}
+        {%- set taxon_rank_name = taxon_item.split('__') %}
+        {%- set taxon_name = taxon_rank_name[-1] %}
+        {%- set taxon_rank = taxon_rank_name[-2] %}
         {%- if taxon_name | length > 0 %}
-        dct:title "{{ taxon_name }}" ;
-        dct:scientificName "{{ taxon_name }}" ;
+        dct:title "{{ taxon_name | xsd("string") }}" ;
+        dct:scientificName "{{ taxon_name | xsd("string") }}" ;
         {%- endif %}
         
         {%- if taxon_rank == 'sk' %}
-        dct:taxonRank "super kingdom" ;
+        dct:taxonRank "super kingdom"^^xsd:string ;
         {%- elif taxon_rank == 'k' %}
-        dct:taxonRank "kingdom" ;
+        dct:taxonRank "kingdom"^^xsd:string ;
         {%- elif taxon_rank == 'p' %}
-        dct:taxonRank "phylum" ;
+        dct:taxonRank "phylum"^^xsd:string ;
         {%- elif taxon_rank == 'c' %}
-        dct:taxonRank "class" ;
+        dct:taxonRank "class"^^xsd:string ;
         {%- elif taxon_rank == 'o' %}
-        dct:taxonRank "order" ;
+        dct:taxonRank "order"^^xsd:string ;
         {%- elif taxon_rank == 'f' %}
-        dct:taxonRank "family" ;
+        dct:taxonRank "family"^^xsd:string ;
         {%- elif taxon_rank == 'g' %}
-        dct:taxonRank "genus" ;
+        dct:taxonRank "genus"^^xsd:string ;
         {%- elif taxon_rank == 's' %}
-        dct:taxonRank "species" ;
+        dct:taxonRank "species"^^xsd:string ;
         {%- endif %}
 .
+{%- endif %}
