@@ -45,8 +45,8 @@ def test_cli():
             assert rf.stat().st_size > 0
             Graph().parse(str(rf), format="ttl")
 
-    # tmpdir = Path("/tmp/test_arup")
-    # tmpdir.mkdir(exist_ok=True, parents=True)
-    # build_and_verify(tmpdir)
-    with tempfile.TemporaryDirectory() as tmpdir:
-        build_and_verify(Path(tmpdir))
+    tmpdir = Path("/tmp/test_arup")
+    tmpdir.mkdir(exist_ok=True, parents=True)
+    build_and_verify(tmpdir)
+    #with tempfile.TemporaryDirectory() as tmpdir:
+    #    build_and_verify(Path(tmpdir))
