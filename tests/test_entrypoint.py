@@ -1,35 +1,24 @@
 import filecmp
 import os
 import tempfile
-from importlib.machinery import SourceFileLoader
-from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
+from conftest import entrypoint, log
+from dotenv import load_dotenv
 from rdflib import Graph
 from sema.commons.glob import getMatchingGlobPaths
 
 
-def load_source(modname, filename):
-    loader = SourceFileLoader(modname, filename)
-    spec = spec_from_file_location(modname, filename, loader=loader)
-    module = module_from_spec(spec)
-    # The module is always executed and not cached in sys.modules.
-    # Uncomment the following line to cache the module.
-    # sys.modules[module.__name__] = module
-    loader.exec_module(module)
-    return module
-
-
 def test_cli():
-    entrypoint = load_source("entrypoint", "entrypoint.py")
     assert entrypoint._main
     root = Path(entrypoint.__file__).parent
 
-    def build_and_verify(outdir: Path) -> None:
-        os.environ["ARUP_WORK"] = str(root / "tests/test-work.yml")
+    def build_and_verify(outdir: str | Path) -> None:
+        outdir = Path(outdir)  # ensure Path type
         entrypoint._main(
+            workfile=root / "tests/test-work.yml",
             rocrateroot=root / "tests/data",
-            templateroot=root / "templates",
+            templateroot=root / "tests/templates",
             resultsroot=outdir,
         )
         # verify results
@@ -45,8 +34,20 @@ def test_cli():
             assert rf.stat().st_size > 0
             Graph().parse(str(rf), format="ttl")
 
-    # tmpdir = Path("/tmp/test_arup")
-    # tmpdir.mkdir(exist_ok=True, parents=True)
-    # build_and_verify(tmpdir)
-    with tempfile.TemporaryDirectory() as tmpdir:
-        build_and_verify(Path(tmpdir))
+    load_dotenv()
+    tmpdir = os.getenv("TEST_OUTFOLDER")
+    if tmpdir:
+        tmpdir = Path(tmpdir)
+        tmpdir.mkdir(exist_ok=True, parents=True)
+        log.info(
+            f"Configured outfolder {tmpdir=} "
+            "allows the output to be manually verified."
+        )
+        build_and_verify(tmpdir)
+    else:
+        log.info(
+            "Temporary outfolder removed at end of test. "
+            "Use environment TEST_OUTFOLDER to specify a permanent one."
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            build_and_verify(tmpdir)

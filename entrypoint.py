@@ -162,7 +162,6 @@ class SubytJobs:
                 for line in inf:
                     outf.write(line)
 
-
     def _prepare(self):
         """Executes the prepare-file-jobs in the workfile."""
         log.debug("running the prepare jobs...")
@@ -189,19 +188,24 @@ class SubytJobs:
 
 def _main(
     *,
-    workfile: str = None,
     rocrateroot: str = "/rocrateroot",
-    templateroot: str = "/arup/templates",
+    workfile: str | None = None,
+    templateroot: str | None = None,
     resultsroot: str | None = None,
 ) -> None:
     rocrateroot = Path(rocrateroot)
 
     # allow env var to be relative to rocrateroot or absolute
-    workfile = workfile or os.environ.get("ARUP_WORK", "/arup/work.yml")
-    workfile = rocrateroot / Path(workfile)
+    workfile = workfile or os.getenv("ARUP_WORK", "/arup/work.yml")
+    workfile = rocrateroot / workfile
 
-    templateroot = Path(templateroot)
+    templateroot = templateroot or os.getenv(
+        "ARUP_TEMPLATES", "/arup/templates"
+    )
+    templateroot = rocrateroot / templateroot
+
     resultsroot = resultsroot or rocrateroot
+    resultsroot = Path(resultsroot)
 
     uplifting = SubytJobs(workfile, rocrateroot, templateroot, resultsroot)
     uplifting.run()
