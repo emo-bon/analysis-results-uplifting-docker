@@ -67,6 +67,16 @@ class SubytJobs:
         with workfile.open("r") as yml:
             return yaml.load(yml, Loader=loader)
 
+    def _source_location(self, identifier: str | dict) -> str:
+        if isinstance(identifier, dict):
+            identifier["path"] = self._input_location(identifier["path"])
+            return identifier
+        if isinstance(identifier, str):
+            parts = identifier.split("+")
+            parts[0] = self._input_location(parts[0])
+            return "+".join(parts)
+        return None
+
     def _input_location(self, input: str) -> str:
         abs_input: str = str((self._rocrateroot / input).absolute())
         # if this desired input is in the prepout mappings, then return that!
@@ -137,7 +147,7 @@ class SubytJobs:
             job["variables"] = vars
             # 2: resolve paths relative to their respective roots
             if "source" in job:
-                job["source"] = self._input_location(job.get("source"))
+                job["source"] = self._source_location(job.get("source"))
             job["extra_sources"] = {
                 name: self._input_location(inp)
                 for name, inp in job.get("extra_sources", {}).items()
@@ -196,11 +206,15 @@ def _main(
     rocrateroot = Path(rocrateroot)
 
     # allow env var to be relative to rocrateroot or absolute
-    workfile = workfile or os.getenv("ARUP_WORK", "/arup/work.yml")
+    workfile = workfile or os.getenv(
+        "ARUP_WORK",
+        "/arup/work.yml",
+    )
     workfile = rocrateroot / workfile
 
     templateroot = templateroot or os.getenv(
-        "ARUP_TEMPLATES", "/arup/templates"
+        "ARUP_TEMPLATES",
+        "/arup/templates",
     )
     templateroot = rocrateroot / templateroot
 
