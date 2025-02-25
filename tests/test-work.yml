@@ -4,15 +4,18 @@ vars:
   - name: domain
     value: https://data.emobon.embrc.eu/
 
-prepare:
-  - input: test-input.txt
-    output: test-input.csv
-    header: "code,label,description"
+# prepare:
+#   - input: test-input.txt
+#     output: test-input.csv
+#     header: "code,label,description"
 
 subyt:
-  - source: test-input.csv
+  - source: test-input.txt+ext=csv+header=code,label,description
     sink: test-output.ttl
     template_name: test-template.ttl
-  - source: test-input.csv
+  - source:
+      path: test-input.txt
+      mime: text/csv
+      header: code,label,description
     sink: test-output2.ttl
     template_name: test-template.ttl

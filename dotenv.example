@@ -1,4 +1,17 @@
 # Usage:
 # Make a copy of this file to a local .env file and change settings as needed
 # ----
-# There are currently no environment variable this service will pick up on
+# Set the output_folder to use during test 
+#  - if not set a tmp folder during test will be created and removed
+#TEST_OUTFOLDER=/tmp/test_arup
+# --
+# Set the docker-guest /path/to/the/work.yml to use in processing
+#  - relative paths are resolved vs. /rocrateroot
+#  - if not set /arup/work.yml is assumed
+#ARUP_WORK=/arup/work.yml
+# --
+# Set the docker-guest /path/to/the/templates/ folder to use in processing
+#  - relative paths are resolved vs. /rocrateroot
+#  - if not set /arup/templates/ is assumed
+#ARUP_TEMPLATES=/arup/templates/
+# --

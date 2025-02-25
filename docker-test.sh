@@ -4,11 +4,21 @@
 dckr_cnt_nm=${1:-"emobon_arup"}
 dckr_img_nm=${2:-"emobon_arup:latest"}
 
-#build a temp space and fill it with the content
-TMPDIR=$(mktemp -d) && echo "using TMPDIR=${TMPDIR}"
-(cd ./tests/data/ && cp -r . ${TMPDIR})
-cp ./tests/test-work.yml ${TMPDIR}/test-work.yml
-tree ${TMPDIR}
+#check for .env file and use it if available
+if [[ -f .env ]]; then
+  source .env
+fi
+#create temp space if not provided from env
+if [[ -z "${TEST_OUTPUTFOLDER}" ]]; then
+  TMPDIR=$(mktemp -d) 
+  TEST_OUTPUTFOLDER=${TMPDIR}
+fi
+echo "using TEST_OUTPUTFOLDER=${TEST_OUTPUTFOLDER}"
+
+# fill the outfolder with the content to test 
+(cd ./tests/data/ && cp -r . ${TEST_OUTPUTFOLDER})
+cp ./tests/test-work.yml ${TEST_OUTPUTFOLDER}/test-work.yml
+cp -r ./tests/templates ${TEST_OUTPUTFOLDER}/test-templates
 
 
 #check if an image exists and build it if not
@@ -22,6 +32,7 @@ docker run --rm \
   --name emo-bon_${dckr_cnt_nm} \
   --volume ${TMPDIR}:/rocrateroot \
   --env ARUP_WORK=test-work.yml \
+  --env ARUP_TEMPLATES=test-templates \
   --env SAMPLE_MAT_ID='test_sm_id' \
   ${dckr_img_nm}
 
