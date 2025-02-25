@@ -8,7 +8,7 @@ import tempfile
 
 from dotenv import load_dotenv
 
-log: Logger = getLogger(__name__)
+log: Logger = getLogger("tests")
 
 
 def load_source(modname, filename):
