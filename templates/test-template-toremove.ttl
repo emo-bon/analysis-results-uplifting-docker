@@ -1,0 +1,16 @@
+{# this is here just waiting to be replaced by actual templates for analysis results #}
+{%- if ctrl.isFirst -%}
+@prefix ex:   <http://example.org/>.
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
+{%- endif %}
+
+{{ uritexpand(domain + "countries/{code}", _) | uri }}
+    a ex:Country;
+    rdfs:label {{ _.label | xsd('@en')}};
+    skos:definition {{ _.description | xsd( '@en') }};
+    dc:identifier {{ (sample_mat_id  + '::' +  ctrl.index|string  + '::' +  _.code) | xsd('string') }}.
+

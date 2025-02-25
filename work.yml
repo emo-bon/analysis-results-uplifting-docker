@@ -4,8 +4,16 @@ vars: # list name,value pairs available for substitution in templates
   - name: sample_mat_id
     value: !resolve "{SAMPLE_MAT_ID}" # use !resolve "text {env_variable} values" to inject from .env
 
+prepare:
+  # multiple prepare jobs can be specified
+  # note: ext=csv hint and header can now also be added to subyt-source directly
+  - input: ./test-input.txt # ./path/relative/to/rocrateroot-volume/
+    output: ./test-input.csv # ./path/relative/to/rocrateroot-volume/
+    header: "code,label,description"
+
 subyt:
   # multiple jobs can be specified
-  - source: ./somewhere/input-file.csv # ./path/relative/to/rocrateroot-volume/
-    sink: ./somewhere/output-file.ttl # ./path/relative/to/rocrateroot-volume/
-    template_name: test-output.ttl.j2 # ./name/relative/to/templates/
+  # below is to be replaced by actual anaylis - results work
+  - source: ./test-input.csv # ./path/relative/to/rocrateroot-volume/
+    sink: ./output-file.ttl # ./path/relative/to/rocrateroot-volume/
+    template_name: test-template-toremove.ttl # ./name/relative/to/templates/
