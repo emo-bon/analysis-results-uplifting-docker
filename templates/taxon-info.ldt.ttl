@@ -17,20 +17,20 @@ Variable:
 {% if ctrl.isFirst %}
 {% include './includes/prefixes.ttl' %}
 
-@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/taxonomy-summary> . 
+@base <https://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/taxonomy-summary> . 
 
-<http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
+<https://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
     schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ;
 .
 {%- endif %}
 
 <>
-    a emobon-product:TaxonomicAnnotation ; 
-    emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
+    a _prod:TaxonomicAnnotation ; 
+    _prod:ofSample <https://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
     {#- unsure if the other properties in file, 'LSU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
-    emobon-product:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    emobon-product:lsuRNA {{_.LSU_rRNA | xsd("double")}} ; 
+    _prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
+    _prod:lsuRNA {{_.LSU_rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
 .

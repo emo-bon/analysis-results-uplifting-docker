@@ -11,7 +11,7 @@
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix mr: <http://marineregions.org/ns/ontology#> .
 @prefix obi: <http://purl.obolibrary.org/obo/OBI_>.
-@prefix emobon-sequence: <https://data.emobon.embrc.eu/ns/sequence#> .
-@prefix emobon-core: <https://data.emobon.embrc.eu/ns/core#> .
-@prefix emobon-sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
-@prefix emobon-product: <https://data.emobon.embrc.eu/ns/product#> .
+@prefix _seq: <https://data.emobon.embrc.eu/ns/sequence#> .
+@prefix _core: <https://data.emobon.embrc.eu/ns/core#> .
+@prefix _sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
+@prefix _prod: <https://data.emobon.embrc.eu/ns/product#> .
