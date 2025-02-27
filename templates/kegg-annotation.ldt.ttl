@@ -1,5 +1,5 @@
 {#- 
-Template: functional-annotation.ldt.ttl.j2 
+Template: kegg-annotation.ldt.ttl.j2 
 Description: Template to generate triples from functional-analysis results in context of EMOBON.
 Input:
     - "./functional-annotation/DBB.merged.summary.ko" 
@@ -14,22 +14,24 @@ Variable:
 
 -#}
 
-{% include './includes/prefixes.ttl' %}
+{%- if ctrl.isFirst %}
+{%- include './includes/prefixes.ttl' %}
 
-@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/functional-annotation/KEGG>
+@base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/functional-annotation/GO>
 
-{# KEGG_annotations #}
-{%- for row in sets['_'] %}
-<#{{row.ID}}> 
+<https://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
+    schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ; 
+. 
+{%- endif %}
+
+<#{{_.ID}}> 
     a emobon-product:FunctionalAnnotation ; 
     dct:type emobon-product:KEGG ; 
 
     emobon-product:ofSample <http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}> ;
-    {# emobon-product:enaNumber {{ENAnumber | xsd("string")}} ;  #}
     
     dct:isPartOf <> ; 
 
-    dct:title {{row.name | xsd('string')}} ; 
-    dct:identifier <https://www.genome.jp/dbget-bin/www_bget?{{row.ID}} > ;  
+    dct:title {{_.name | xsd('string')}} ; 
+    dct:identifier <https://www.genome.jp/dbget-bin/www_bget?{{_.ID}} > ;  
 .
-{%- endfor %}

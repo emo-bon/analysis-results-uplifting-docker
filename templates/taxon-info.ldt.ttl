@@ -21,6 +21,7 @@ Variable:
 
 <https://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
     schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ;
+    rdfs:seeAlso "https://www.ebi.ac.uk/ena/browser/view/{{ENAnumber}} ;
 .
 {%- endif %}
 

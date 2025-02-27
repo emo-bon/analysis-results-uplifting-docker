@@ -58,23 +58,18 @@ subyt:
   # - source: ./functional-annotation/DBB.merged.summary.go.csv
   #   sink: ./functional-annotation/GO
   #   template_name: go-annotation.ldt.ttl
-  #   mode: no-it
   # - source: ./functional-annotation/DBB.merged.summary.ips.csv
   #   sink: ./functional-annotation/IPS
   #   template_name: ips-annotation.ldt.ttl
-  #   mode: no-it
   # - source: ./functional-annotation/DBB.merged.summary.ko.csv
   #   sink: ./functional-annotation/KEGG
   #   template_name: kegg-annotation.ldt.ttl
-  #   mode: no-it
   # - source: ./functional-annotation/DBB.merged.summary.pfam.csv
   #   sink: ./functional-annotation/PFAM
   #   template_name: pfam-annotation.ldt.ttl
-  #   mode: no-it
   # - source: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
   #   sink: ./functional-annotation/EGGNOG
   #   template_name: eggnog-annotation.ldt.ttl
-  #   mode: no-it
   
   #- source: ./test-input.csv
   #  sink: ./test-output.ttl

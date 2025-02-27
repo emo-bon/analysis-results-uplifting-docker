@@ -1,5 +1,5 @@
 {#- 
-Template: functional-annotation.ldt.ttl.j2 
+Template: eggnog-annotation.ldt.ttl.j2 
 Description: Template to generate triples from functional-analysis results in context of EMOBON.
 Input:
     - "./DBB.merged.emapper.summary.eggnog" as eggnog_annotations
@@ -19,9 +19,7 @@ Variable:
 
 @base <http://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/functional-annotation>
 
-{# EGGNOG_annotations #}
-{%- for row in sets['_'] %}
-<#{{row.ID}}> 
+<#{{_.ID}}> 
     a emobon-product:FunctionalAnnotation ; 
     dct:type emobon-product:EGGNOG ; 
 
@@ -30,7 +28,6 @@ Variable:
     
     dct:isPartOf <> ; 
 
-    dct:title {{row.name | xsd('string')}} ; 
-    dct:identifier <http://eggnog6.embl.de/search/ogs/{{row.ID}}/> ;
+    dct:title {{_.name | xsd('string')}} ; 
+    dct:identifier <http://eggnog6.embl.de/search/ogs/{{_.ID}}/> ;
 .
-{%- endfor %}
