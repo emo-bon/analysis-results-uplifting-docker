@@ -1,0 +1,1 @@
+{%- macro sample(obs_id, env_package, source_mat_id) %}<http://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>{%- endmacro %}
