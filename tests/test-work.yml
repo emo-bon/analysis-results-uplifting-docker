@@ -1,16 +1,16 @@
 vars:
   - name: cluster
-    value: cluster-01
+    value: !resolve "{CLUSTER_ID}"
   - name: genoscopeID
     value: !resolve "{GENOSCOPE_ID}"
   - name: ENANumber
     value: !resolve "{ENA_NR}"
   - name: obs_id
-    value: VB
+    value: !resolve "{OBS_ID}"
   - name: env_package
-    value: Wa
+    value: !resolve "{ENVPACKAGE_ID}"
   - name: source_mat_id
-    value: TEST_SOURCE_MAT_ID
+    value: !resolve "{SOURCE_MAT_ID}"
   - name: domain
     value: https://data.emobon.embrc.eu/
   - name: my_var_name

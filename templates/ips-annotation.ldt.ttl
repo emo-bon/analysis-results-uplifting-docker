@@ -5,14 +5,12 @@ Input:
     - "./functional-annotation/DBB.merged.summary.ips" 
 
 Variable:
-    - baseref ?
     - cluster
     - genoscopeID
-    - ENAnumber --> to discuss
+    - ENAnumber
     - obs_id
     - env_package
-    - source_mat_id ~ the id of the sample (~see 'name' of the dataset in ro-crate-metadata.json)
-
+    - source_mat_id
 -#}
 
 {%- if ctrl.isFirst %}
