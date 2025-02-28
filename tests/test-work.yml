@@ -32,8 +32,8 @@ prepare:
   - input: ./functional-annotation/DBB.merged.emapper.summary.eggnog
     output: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
     header: "Abundance,ID,name"
-  - input: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv             #note removed first two rows
-    output: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
+  - input: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv             #note: removed first two rows of this input file!!
+    output: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
     header: "OTU_ID,LSU_rRNA,taxonomy,taxid"
 
 #prepare:
@@ -51,7 +51,7 @@ subyt:
     sink: !resolve ./{GENOSCOPE_ID}/functional-annotation
     template_name: functional-annotation.ldt.ttl
     mode: no-it
-  - source: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
+  - source: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
     sink: !resolve ./{GENOSCOPE_ID}/taxonomy-summary
     template_name: taxon-info.ldt.ttl
   
