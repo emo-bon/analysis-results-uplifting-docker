@@ -9,9 +9,8 @@ Input/Sets:
     - "./DBB.merged.emapper.summary.eggnog" as eggnog_annotations
 
 Variable:
-    - cluster
-    - genoscopeID
-    - ENAnumber
+    - uri_to_crate
+    - enanumber
     - obs_id
     - env_package
     - source_mat_id
@@ -21,10 +20,10 @@ Variable:
 
 {% include './includes/prefixes.ttl' %}
 
-@base <https://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/functional-annotation> .
+@base {{ uri_to_crate ~ '/functional-annotation' }} .
 
-<https://data.emobon.embrc.eu/observatory-{{obs_id}}-crate/{{env_package}}/sample/{{source_mat_id}}>
-    schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ; 
+{{ uri.sample(obs_id, env_package, source_mat_id) }}
+    rdfs:seeAlso <https://www.ebi.ac.uk/ena/browser/view/{{enanumber}}> ;
 . 
 
 {# GO_annotations #}

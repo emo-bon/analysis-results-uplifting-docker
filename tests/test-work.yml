@@ -3,7 +3,7 @@ vars:
     value: !resolve "{CLUSTER_ID}"
   - name: genoscopeID
     value: !resolve "{GENOSCOPE_ID}"
-  - name: ENANumber
+  - name: enanumber
     value: !resolve "{ENA_NR}"
   - name: obs_id
     value: !resolve "{OBS_ID}"
@@ -11,6 +11,8 @@ vars:
     value: !resolve "{ENVPACKAGE_ID}"
   - name: source_mat_id
     value: !resolve "{SOURCE_MAT_ID}"
+  - name: uri_to_crate
+    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
   - name: domain
     value: https://data.emobon.embrc.eu/
   - name: my_var_name

@@ -6,9 +6,8 @@ Input:
     (or is it ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv ?)
  
 Variable:
-    - cluster
-    - genoscopeID
-    - ENAnumber
+    - uri_to_crate
+    - enanumber
     - obs_id
     - env_package
     - source_mat_id
@@ -18,11 +17,10 @@ Variable:
 {%- if ctrl.isFirst %}
 {%- include './includes/prefixes.ttl' %}
 
-@base <https://data.emobon.embrc.eu/analysis-results-{{cluster}}-crate/{{genoscopeID}}/taxonomy-summary> . 
+@base {{ uri_to_crate ~ '/taxonomy-summary'  | uri }} .
 
 {{ uri.sample(obs_id, env_package, source_mat_id) }}
-    schema:identifier {{ENAnumber | xsd("string")}}  , {{genoscopeID | xsd("string")}}  ;
-    rdfs:seeAlso "https://www.ebi.ac.uk/ena/browser/view/{{ENAnumber}} ;
+    rdfs:seeAlso "https://www.ebi.ac.uk/ena/browser/view/{{enanumber}} ;
 .
 {%- endif %}
 
