@@ -34,6 +34,13 @@ prepare:
     output: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
     header: "OTU_ID,LSU_rRNA,taxonomy,taxid"
 
+prepare:
+  # multiple prepare jobs can be specified
+  # note: ext=csv hint and header can now also be added to subyt-source directly
+  - input: ./test-input.txt # ./path/relative/to/rocrateroot-volume/
+    output: ./test-input.csv # ./path/relative/to/rocrateroot-volume/
+    header: "code,label,description"
+
 subyt:
   - extra_sources:
       go_annotations: ./functional-annotation/DBB.merged.summary.go.csv

@@ -1,52 +1,62 @@
 import filecmp
-import os
-import tempfile
-from importlib.machinery import SourceFileLoader
-from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
-
+from conftest import entrypoint, root, tempdir_path, log
 from rdflib import Graph
-from sema.commons.glob import getMatchingGlobPaths
 
 
-def load_source(modname, filename):
-    loader = SourceFileLoader(modname, filename)
-    spec = spec_from_file_location(modname, filename, loader=loader)
-    module = module_from_spec(spec)
-    # The module is always executed and not cached in sys.modules.
-    # Uncomment the following line to cache the module.
-    # sys.modules[module.__name__] = module
-    loader.exec_module(module)
-    return module
+def verify_build(outdir: Path, workfile: Path) -> None:
+    # load the workfile, grab the expected outputs
+    log.debug(f"Verifying build in {outdir}")
+    log.debug(f"Using workfile {workfile}")
+    workdict = entrypoint.SubytJobs.load_instructions(workfile)
+    log.debug(f"Workfile loaded and subyt tasks found: {workdict['subyt']}")
+    expectedfiles: list[Path] = [
+        outdir / job.get('sink')
+        for job in workdict["subyt"]
+    ]
+
+    for ef in expectedfiles:
+        assert ef.exists()
+        assert ef.stat().st_size > 0
+        Graph().parse(str(ef), format="ttl")
 
 
-def test_cli():
-    entrypoint = load_source("entrypoint", "entrypoint.py")
+def test_basics():
+    log.debug("test_basics")
     assert entrypoint._main
-    root = Path(entrypoint.__file__).parent
 
     def build_and_verify(outdir: Path) -> None:
-        os.environ["ARUP_WORK"] = str(root / "tests/test-work.yml")
+        workfile = root / "tests/test-work.yml"
         entrypoint._main(
+            workfile=workfile,
+            rocrateroot=root / "tests/data",
+            templateroot=root / "tests/templates",
+            resultsroot=outdir,
+        )
+        verify_build(outdir, workfile)
+        assert filecmp.cmp(
+            outdir / "test-output.ttl",
+            outdir / "test-output2.ttl",
+        )
+
+    with tempdir_path() as tmpdir:
+        build_and_verify(tmpdir)
+
+
+def test_arup_templating():
+    log.debug("test_arup_templating")
+    assert entrypoint._main
+
+    def build_and_verify(outdir: Path) -> None:
+        workfile = root / "work.yml"
+        entrypoint._main(
+            workfile=workfile,
             rocrateroot=root / "tests/data",
             templateroot=root / "templates",
             resultsroot=outdir,
         )
-        # verify results
-        resultfiles = getMatchingGlobPaths(
-            outdir, includes=["*.ttl"], makeRelative=False
-        )
-        assert len(resultfiles) == 2
-        # compare the ttl files, should be exactly the same
-        assert filecmp.cmp(resultfiles[0], resultfiles[1], shallow=True)
-        # try parsing the ttl files too
-        for rf in resultfiles:
-            assert rf.exists()
-            assert rf.stat().st_size > 0
-            Graph().parse(str(rf), format="ttl")
+        verify_build(outdir, workfile)
+        # TODO: verify the templating more extensively
 
-    tmpdir = Path("/tmp/test_arup")
-    tmpdir.mkdir(exist_ok=True, parents=True)
-    build_and_verify(tmpdir)
-    #with tempfile.TemporaryDirectory() as tmpdir:
-    #    build_and_verify(Path(tmpdir))
+    with tempdir_path() as tmpdir:
+        build_and_verify(tmpdir)
