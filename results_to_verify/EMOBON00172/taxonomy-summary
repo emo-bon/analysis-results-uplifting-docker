@@ -1,4 +1,3 @@
-
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
@@ -12,253 +11,253 @@
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix mr: <http://marineregions.org/ns/ontology#> .
 @prefix obi: <http://purl.obolibrary.org/obo/OBI_>.
-@prefix _seq: <https://data.emobon.embrc.eu/ns/sequence#> .
-@prefix _core: <https://data.emobon.embrc.eu/ns/core#> .
-@prefix _sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
-@prefix _prod: <https://data.emobon.embrc.eu/ns/product#> .
+@prefix seq: <https://data.emobon.embrc.eu/ns/sequence#> .
+@prefix core: <https://data.emobon.embrc.eu/ns/core#> .
+@prefix sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
+@prefix prod: <https://data.emobon.embrc.eu/ns/product#> .
 
-@base <https://data.emobon.embrc.eu/analysis-results-cluster-01-crate/EMOBON00172/taxonomy-summary> . 
+@base <https://data.emobon.embrc.eu/analysis-results-cluster01-crate/EMOBON00172/taxonomy-summary> .
 
-<https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID>
-    schema:identifier ''^^xsd:string  , 'EMOBON00172'^^xsd:string  ;
+<http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id>
+    rdfs:seeAlso <https://www.ebi.ac.uk/ena/browser/view/test_ENAnummer> ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2157> ; 
-    _prod:otuID '16965'^^xsd:integer ; 
-    _prod:lsuRNA '4.0'^^xsd:double ; 
+    prod:otuID '16965'^^xsd:integer ; 
+    prod:lsuRNA '4.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2157>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Archaea'^^xsd:string" ;
-        dct:scientificName "'Archaea'^^xsd:string" ;
-        dct:taxonRank "super kingdom"^^xsd:string ;
+        dct:title 'Archaea'^^xsd:string ;
+        dct:scientificName 'Archaea'^^xsd:string ;
+        dct:taxonRank 'super kingdom'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=183967> ; 
-    _prod:otuID '1039'^^xsd:integer ; 
-    _prod:lsuRNA '28.0'^^xsd:double ; 
+    prod:otuID '1039'^^xsd:integer ; 
+    prod:lsuRNA '28.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=183967>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Thermoplasmata'^^xsd:string" ;
-        dct:scientificName "'Thermoplasmata'^^xsd:string" ;
-        dct:taxonRank "class"^^xsd:string ;
+        dct:title 'Thermoplasmata'^^xsd:string ;
+        dct:scientificName 'Thermoplasmata'^^xsd:string ;
+        dct:taxonRank 'class'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2> ; 
-    _prod:otuID '3616'^^xsd:integer ; 
-    _prod:lsuRNA '1261.0'^^xsd:double ; 
+    prod:otuID '3616'^^xsd:integer ; 
+    prod:lsuRNA '1261.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Bacteria'^^xsd:string" ;
-        dct:scientificName "'Bacteria'^^xsd:string" ;
-        dct:taxonRank "super kingdom"^^xsd:string ;
+        dct:title 'Bacteria'^^xsd:string ;
+        dct:scientificName 'Bacteria'^^xsd:string ;
+        dct:taxonRank 'super kingdom'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=57723> ; 
-    _prod:otuID '15856'^^xsd:integer ; 
-    _prod:lsuRNA '3.0'^^xsd:double ; 
+    prod:otuID '15856'^^xsd:integer ; 
+    prod:lsuRNA '3.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=57723>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Acidobacteria'^^xsd:string" ;
-        dct:scientificName "'Acidobacteria'^^xsd:string" ;
-        dct:taxonRank "phylum"^^xsd:string ;
+        dct:title 'Acidobacteria'^^xsd:string ;
+        dct:scientificName 'Acidobacteria'^^xsd:string ;
+        dct:taxonRank 'phylum'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2562241> ; 
-    _prod:otuID '10280'^^xsd:integer ; 
-    _prod:lsuRNA '6.0'^^xsd:double ; 
+    prod:otuID '10280'^^xsd:integer ; 
+    prod:lsuRNA '6.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2562241>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Thermoanaerobaculales'^^xsd:string" ;
-        dct:scientificName "'Thermoanaerobaculales'^^xsd:string" ;
-        dct:taxonRank "order"^^xsd:string ;
+        dct:title 'Thermoanaerobaculales'^^xsd:string ;
+        dct:scientificName 'Thermoanaerobaculales'^^xsd:string ;
+        dct:taxonRank 'order'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=201174> ; 
-    _prod:otuID '14998'^^xsd:integer ; 
-    _prod:lsuRNA '25.0'^^xsd:double ; 
+    prod:otuID '14998'^^xsd:integer ; 
+    prod:lsuRNA '25.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=201174>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Actinobacteria'^^xsd:string" ;
-        dct:scientificName "'Actinobacteria'^^xsd:string" ;
-        dct:taxonRank "phylum"^^xsd:string ;
+        dct:title 'Actinobacteria'^^xsd:string ;
+        dct:scientificName 'Actinobacteria'^^xsd:string ;
+        dct:taxonRank 'phylum'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1760> ; 
-    _prod:otuID '29278'^^xsd:integer ; 
-    _prod:lsuRNA '7.0'^^xsd:double ; 
+    prod:otuID '29278'^^xsd:integer ; 
+    prod:lsuRNA '7.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1760>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Actinobacteria'^^xsd:string" ;
-        dct:scientificName "'Actinobacteria'^^xsd:string" ;
-        dct:taxonRank "class"^^xsd:string ;
+        dct:title 'Actinobacteria'^^xsd:string ;
+        dct:scientificName 'Actinobacteria'^^xsd:string ;
+        dct:taxonRank 'class'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1389453> ; 
-    _prod:otuID '7378'^^xsd:integer ; 
-    _prod:lsuRNA '2.0'^^xsd:double ; 
+    prod:otuID '7378'^^xsd:integer ; 
+    prod:lsuRNA '2.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1389453>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Candidatus_Actinomarina'^^xsd:string" ;
-        dct:scientificName "'Candidatus_Actinomarina'^^xsd:string" ;
-        dct:taxonRank "genus"^^xsd:string ;
+        dct:title 'Candidatus_Actinomarina'^^xsd:string ;
+        dct:scientificName 'Candidatus_Actinomarina'^^xsd:string ;
+        dct:taxonRank 'genus'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85007> ; 
-    _prod:otuID '17351'^^xsd:integer ; 
-    _prod:lsuRNA '6.0'^^xsd:double ; 
+    prod:otuID '17351'^^xsd:integer ; 
+    prod:lsuRNA '6.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85007>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Corynebacteriales'^^xsd:string" ;
-        dct:scientificName "'Corynebacteriales'^^xsd:string" ;
-        dct:taxonRank "order"^^xsd:string ;
+        dct:title 'Corynebacteriales'^^xsd:string ;
+        dct:scientificName 'Corynebacteriales'^^xsd:string ;
+        dct:taxonRank 'order'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1716> ; 
-    _prod:otuID '4552'^^xsd:integer ; 
-    _prod:lsuRNA '3.0'^^xsd:double ; 
+    prod:otuID '4552'^^xsd:integer ; 
+    prod:lsuRNA '3.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1716>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Corynebacterium'^^xsd:string" ;
-        dct:scientificName "'Corynebacterium'^^xsd:string" ;
-        dct:taxonRank "genus"^^xsd:string ;
+        dct:title 'Corynebacterium'^^xsd:string ;
+        dct:scientificName 'Corynebacterium'^^xsd:string ;
+        dct:taxonRank 'genus'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1763> ; 
-    _prod:otuID '9055'^^xsd:integer ; 
-    _prod:lsuRNA '1.0'^^xsd:double ; 
+    prod:otuID '9055'^^xsd:integer ; 
+    prod:lsuRNA '1.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1763>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Mycobacterium'^^xsd:string" ;
-        dct:scientificName "'Mycobacterium'^^xsd:string" ;
-        dct:taxonRank "genus"^^xsd:string ;
+        dct:title 'Mycobacterium'^^xsd:string ;
+        dct:scientificName 'Mycobacterium'^^xsd:string ;
+        dct:taxonRank 'genus'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85006> ; 
-    _prod:otuID '32117'^^xsd:integer ; 
-    _prod:lsuRNA '6.0'^^xsd:double ; 
+    prod:otuID '32117'^^xsd:integer ; 
+    prod:lsuRNA '6.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85006>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Micrococcales'^^xsd:string" ;
-        dct:scientificName "'Micrococcales'^^xsd:string" ;
-        dct:taxonRank "order"^^xsd:string ;
+        dct:title 'Micrococcales'^^xsd:string ;
+        dct:scientificName 'Micrococcales'^^xsd:string ;
+        dct:taxonRank 'order'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85023> ; 
-    _prod:otuID '36359'^^xsd:integer ; 
-    _prod:lsuRNA '2.0'^^xsd:double ; 
+    prod:otuID '36359'^^xsd:integer ; 
+    prod:lsuRNA '2.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=85023>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Microbacteriaceae'^^xsd:string" ;
-        dct:scientificName "'Microbacteriaceae'^^xsd:string" ;
-        dct:taxonRank "family"^^xsd:string ;
+        dct:title 'Microbacteriaceae'^^xsd:string ;
+        dct:scientificName 'Microbacteriaceae'^^xsd:string ;
+        dct:taxonRank 'family'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=31957> ; 
-    _prod:otuID '14825'^^xsd:integer ; 
-    _prod:lsuRNA '7.0'^^xsd:double ; 
+    prod:otuID '14825'^^xsd:integer ; 
+    prod:lsuRNA '7.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=31957>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Propionibacteriaceae'^^xsd:string" ;
-        dct:scientificName "'Propionibacteriaceae'^^xsd:string" ;
-        dct:taxonRank "family"^^xsd:string ;
+        dct:title 'Propionibacteriaceae'^^xsd:string ;
+        dct:scientificName 'Propionibacteriaceae'^^xsd:string ;
+        dct:taxonRank 'family'^^xsd:string ;
 .
 
 <>
-    a _prod:TaxonomicAnnotation ; 
-    _prod:ofSample <https://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/TEST_SOURCE_MAT_ID> ;
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample <http://data.emobon.embrc.eu/observatory-VB-crate/Wa/sample/test_source_mat_id> ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1883> ; 
-    _prod:otuID '4585'^^xsd:integer ; 
-    _prod:lsuRNA '3.0'^^xsd:double ; 
+    prod:otuID '4585'^^xsd:integer ; 
+    prod:lsuRNA '3.0'^^xsd:double ; 
 
     dct:isPartOf <> ; 
 .
 <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1883>
     a dct:Taxon, schema:Taxon ;
-        dct:title "'Streptomyces'^^xsd:string" ;
-        dct:scientificName "'Streptomyces'^^xsd:string" ;
-        dct:taxonRank "genus"^^xsd:string ;
+        dct:title 'Streptomyces'^^xsd:string ;
+        dct:scientificName 'Streptomyces'^^xsd:string ;
+        dct:taxonRank 'genus'^^xsd:string ;
 .
