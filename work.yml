@@ -1,11 +1,49 @@
-vars: # list name,value pairs available for substitution in templates
-  - name: domain
-    value: https://data.emobon.embrc.eu/
-  - name: sample_mat_id
-    value: !resolve "{SAMPLE_MAT_ID}" # use !resolve "text {env_variable} values" to inject from .env
+vars:
+  - name: cluster
+    value: !resolve "{CLUSTER_ID}"
+  - name: genoscopeID
+    value: !resolve "{GENOSCOPE_ID}"
+  - name: enanumber
+    value: !resolve "{ENA_NR}"
+  - name: obs_id
+    value: !resolve "{OBS_ID}"
+  - name: env_package
+    value: !resolve "{ENVPACKAGE_ID}"
+  - name: source_mat_id
+    value: !resolve "{SOURCE_MAT_ID}"
+  - name: uri_to_crate
+    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
+
+prepare:
+  - input: ./functional-annotation/DBB.merged.summary.go
+    output: ./functional-annotation/DBB.merged.summary.go.csv
+    header: "ID,sub_process,process,abundance"
+  - input: ./functional-annotation/DBB.merged.summary.ips
+    output: ./functional-annotation/DBB.merged.summary.ips.csv
+    header: "Abundance,ID,sequence_domain_region_name"
+  - input: ./functional-annotation/DBB.merged.summary.ko
+    output: ./functional-annotation/DBB.merged.summary.ko.csv
+    header: "Abundance,ID,name"
+  - input: ./functional-annotation/DBB.merged.summary.pfam
+    output: ./functional-annotation/DBB.merged.summary.pfam.csv
+    header: "Abundance,ID,name"
+  - input: ./functional-annotation/DBB.merged.emapper.summary.eggnog
+    output: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+    header: "Abundance,ID,name"
+  - input: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv             #note: removed first two rows of this input file!!
+    output: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
+    header: "OTU_ID,LSU_rRNA,taxonomy,taxid"
 
 subyt:
-  # multiple jobs can be specified
-  - source: ./somewhere/input-file.csv # ./path/relative/to/rocrateroot-volume/
-    sink: ./somewhere/output-file.ttl # ./path/relative/to/rocrateroot-volume/
-    template_name: test-output.ttl.j2 # ./name/relative/to/templates/
+  - extra_sources:
+      go_annotations: ./functional-annotation/DBB.merged.summary.go.csv
+      ips_annotations: ./functional-annotation/DBB.merged.summary.ips.csv
+      kegg_annotations: ./functional-annotation/DBB.merged.summary.ko.csv
+      pfam_annotations: ./functional-annotation/DBB.merged.summary.pfam.csv
+      eggnog_annotations: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+    sink: !resolve ./{GENOSCOPE_ID}/functional-annotation
+    template_name: functional-annotation.ldt.ttl
+    mode: no-it
+  - source: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
+    sink: !resolve ./{GENOSCOPE_ID}/taxonomy-summary
+    template_name: taxon-info.ldt.ttl
