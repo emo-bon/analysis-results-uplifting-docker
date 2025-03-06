@@ -31,7 +31,13 @@ $ docker pull ghcr.io/emo-bon/emobon_arup:${version}  # should pull the image wi
 
 # variable setting to inject
 $ rocrateroot="../path_to_analysis_results_repo/crate_results_folder_X"
-$ source_mat_id="YourRefHere"
+$ DOMAIN='https://data.emobon.embrc.eu' 
+$ REPO_NAME='analysis-results-cluster01-crate'  
+$ GENOSCOPE_ID='EMOBON00172' 
+$ ENA_NR='test_ENAnummer' 
+$ OBS_ID='VB' 
+$ ENVPACKAGE_ID='Wa' 
+$ SOURCE_MAT_ID='test_source_mat_id'
 
 # actually run it
 $ docker run --rm --name "emo-bon_arup" --volume ${rocrateroot}:/rocrateroot --env SOURCE_MAT_ID=${source_mat_id} ghcr.io/emo-bon/emobon_arup:${version}
