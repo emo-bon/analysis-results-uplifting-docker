@@ -4,10 +4,10 @@ vars:
   - name: my_var_name
     value: !resolve "ref:{SAMPLE_MAT_ID}"
 
-# prepare:
-#   - input: test-input.txt
-#     output: test-input.csv
-#     header: "code,label,description"
+#prepare:
+#  - input: test-input.txt
+#    output: test-input.csv
+#    header: "code,label,description"
 
 subyt:
   - source: test-input.txt+ext=csv+header=code,label,description
