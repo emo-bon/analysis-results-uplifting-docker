@@ -1,19 +1,67 @@
-vars: # list name,value pairs available for substitution in templates
-  - name: domain
-    value: https://data.emobon.embrc.eu/
-  - name: sample_mat_id
-    value: !resolve "{SAMPLE_MAT_ID}" # use !resolve "text {env_variable} values" to inject from .env
+vars:
+  - name: cluster
+    value: !resolve "{CLUSTER_ID}"
+  - name: genoscopeID
+    value: !resolve "{GENOSCOPE_ID}"
+  - name: enanumber
+    value: !resolve "{ENA_NR}"
+  - name: obs_id
+    value: !resolve "{OBS_ID}"
+  - name: env_package
+    value: !resolve "{ENVPACKAGE_ID}"
+  - name: source_mat_id
+    value: !resolve "{SOURCE_MAT_ID}"
+  - name: uri_to_crate
+    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
 
-prepare:
-  # multiple prepare jobs can be specified
-  # note: ext=csv hint and header can now also be added to subyt-source directly
-  - input: ./test-input.txt # ./path/relative/to/rocrateroot-volume/
-    output: ./test-input.csv # ./path/relative/to/rocrateroot-volume/
-    header: "code,label,description"
+#prepare:
+#  - input: ./functional-annotation/DBB.merged.summary.go
+#    output: ./functional-annotation/DBB.merged.summary.go.csv
+#    header: "ID,sub_process,process,abundance"
+#  - input: ./functional-annotation/DBB.merged.summary.ips
+#    output: ./functional-annotation/DBB.merged.summary.ips.csv
+#    header: "Abundance,ID,sequence_domain_region_name"
+#  - input: ./functional-annotation/DBB.merged.summary.ko
+#    output: ./functional-annotation/DBB.merged.summary.ko.csv
+#    header: "Abundance,ID,name"
+#  - input: ./functional-annotation/DBB.merged.summary.pfam
+#    output: ./functional-annotation/DBB.merged.summary.pfam.csv
+#    header: "Abundance,ID,name"
+#  - input: ./functional-annotation/DBB.merged.emapper.summary.eggnog
+#    output: ./functional-annotation/DBB.merged.emapper.summary.eggnog.csv
+#    header: "Abundance,ID,name"
+#  - input: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv             #note: removed first two rows of this input file!!
+#    output: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq_fixedheader.csv
+#    header: "OTU_ID,LSU_rRNA,taxonomy,taxid"
 
 subyt:
-  # multiple jobs can be specified
-  # below is to be replaced by actual anaylis - results work
-  - source: ./test-input.csv # ./path/relative/to/rocrateroot-volume/
-    sink: ./output-file.ttl # ./path/relative/to/rocrateroot-volume/
-    template_name: test-template-toremove.ttl # ./name/relative/to/templates/
+  - extra_sources:
+      go_annotations:
+        path: ./functional-annotation/DBB.merged.summary.go
+        mime: text/csv
+        header: ID,sub_process,process,abundance
+      ips_annotations: 
+        path: ./functional-annotation/DBB.merged.summary.ips
+        mime: text/csv
+        header: Abundance,ID,sequence_domain_region_name
+      kegg_annotations: 
+        path: ./functional-annotation/DBB.merged.summary.ko
+        mime: text/csv
+        header: Abundance,ID,name
+      pfam_annotations: 
+        path: ./functional-annotation/DBB.merged.summary.pfam
+        mime: text/csv
+        header: Abundance,ID,name
+      eggnog_annotations: 
+        path: ./functional-annotation/DBB.merged.emapper.summary.eggnog
+        mime: text/csv
+        header: Abundance,ID,name
+    sink: !resolve ./{GENOSCOPE_ID}/functional-annotation
+    template_name: functional-annotation.ldt.ttl
+    mode: no-it
+  - source: 
+      path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
+      mime: text/csv
+      header: OTU_ID,LSU_rRNA,taxonomy,taxid
+    sink: !resolve ./{GENOSCOPE_ID}/taxonomy-summary
+    template_name: taxon-info.ldt.ttl
