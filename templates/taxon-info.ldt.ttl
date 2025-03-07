@@ -24,7 +24,7 @@ Variable:
 .
 {%- endif %}
 
-<>
+<#{{_.taxid}}>
     a prod:TaxonomicAnnotation ; 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
     {#- unsure if the other properties in file, 'LSU_rRNA' and 'OTU ID', are relevant #}
