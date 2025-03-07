@@ -30,13 +30,21 @@ $ version="latest" # or pick an available release tag from https://github.com/or
 $ docker pull ghcr.io/emo-bon/emobon_arup:${version}  # should pull the image without errors
 
 # variable setting to inject
+### Path to the root directory where analysis results are stored  
 $ rocrateroot="../path_to_analysis_results_repo/crate_results_folder_X"
-$ DOMAIN='https://data.emobon.embrc.eu' 
-$ REPO_NAME='analysis-results-cluster01-crate'  
-$ GENOSCOPE_ID='EMOBON00172' 
-$ ENA_NR='test_ENAnummer' 
+### Base domain URL for the data repository
+$ DOMAIN='https://data.emobon.embrc.eu'
+### Name of the repository where the analysis results are stored
+$ REPO_NAME='analysis-results-cluster01-crate'
+### Unique identifier for the sample assigned by Genoscope
+$ GENOSCOPE_ID='EMOBON00172'
+### Accession number for the sample in the European Nucleotide Archive (ENA)
+$ ENA_NR='test_ENAnummer'
+### Identifier for the Observatory
 $ OBS_ID='VB' 
+### Environmental package ID, categorizing the type of environment sampled: Wa (water), Se (sediment)
 $ ENVPACKAGE_ID='Wa' 
+### Identifier for the material sample used in the analysis  
 $ SOURCE_MAT_ID='test_source_mat_id'
 
 # actually run it
