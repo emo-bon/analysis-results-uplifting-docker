@@ -41,7 +41,7 @@ lint-fix: ## [  py] Fixes the code for linting and formatting issues
 
 test: ## [  py] Runs the tests for the project
 	@echo "running the tests for the project"
-	@test -d .venv && (. .venv/bin/activate; DOMAIN='https://data.emobon.embrc.eu' REPO_NAME='analysis-results-cluster01-crate'  GENOSCOPE_ID='EMOBON00172' ENA_NR='test_ENAnummer' OBS_ID='VB' ENVPACKAGE_ID='Wa' SOURCE_MAT_ID='test_source_mat_id' pytest tests/) || :
+	@test -d .venv && (. .venv/bin/activate; DOMAIN='https://data.emobon.embrc.eu' REPO_NAME='analysis-results-cluster01-crate' GENOSCOPE_ID='EMOBON00172' ENA_NR='test_ENAnummer' OBS_ID='VB' ENVPACKAGE_ID='Wa' SOURCE_MAT_ID='test_source_mat_id' pytest tests/) || :
 	@test -d .venv || echo "no .venv directory found, run 'make init' to initialize the python environment"
 
 clean: ## [  py] Cleans the python environment for the project

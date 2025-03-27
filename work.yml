@@ -1,8 +1,6 @@
 vars:
-  - name: cluster
-    value: !resolve "{CLUSTER_ID}"
-  - name: genoscopeID
-    value: !resolve "{GENOSCOPE_ID}"
+  - name: uri_to_crate
+    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
   - name: enanumber
     value: !resolve "{ENA_NR}"
   - name: obs_id
@@ -11,8 +9,6 @@ vars:
     value: !resolve "{ENVPACKAGE_ID}"
   - name: source_mat_id
     value: !resolve "{SOURCE_MAT_ID}"
-  - name: uri_to_crate
-    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
 
 #prepare:
 #  - input: ./functional-annotation/DBB.merged.summary.go
