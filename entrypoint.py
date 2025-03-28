@@ -149,7 +149,7 @@ class SubytJobs:
             if "source" in job:
                 job["source"] = self._source_location(job.get("source"))
             job["extra_sources"] = {
-                name: self._input_location(inp)
+                name: self._source_location(inp)
                 for name, inp in job.get("extra_sources", {}).items()
             }
             job["sink"] = self._output_location(job.get("sink"))
