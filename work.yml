@@ -1,6 +1,6 @@
 vars:
   - name: uri_to_crate
-    value: !resolve "{DOMAIN}/{REPO_NAME}/{GENOSCOPE_ID}"
+    value: !resolve "{DOMAIN}/{REPO_NAME}/{REF_CODE}"
   - name: enanumber
     value: !resolve "{ENA_NR}"
   - name: obs_id
@@ -52,12 +52,12 @@ subyt:
         path: ./functional-annotation/DBB.merged.emapper.summary.eggnog
         mime: text/csv
         header: Abundance,ID,name
-    sink: !resolve ./{GENOSCOPE_ID}/functional-annotation
+    sink: !resolve ./{REF_CODE}/functional-annotation
     template_name: functional-annotation.ldt.ttl
     mode: no-it
   - source: 
       path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
       mime: text/csv
       header: OTU_ID,LSU_rRNA,taxonomy,taxid
-    sink: !resolve ./{GENOSCOPE_ID}/taxonomy-summary
+    sink: !resolve ./{REF_CODE}/taxonomy-summary
     template_name: taxon-info.ldt.ttl

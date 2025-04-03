@@ -48,7 +48,7 @@ test: ## [  py] Runs the tests for the project
 	@. .venv/bin/activate; \
 	  DOMAIN='https://data.emobon.embrc.eu' \
 	  REPO_NAME='analysis-results-cluster01-crate' \
-	  GENOSCOPE_ID='EMOBON00172' \
+	  REF_CODE='EMOBON00172' \
 	  ENA_NR='test_ENAnummer' \
 	  OBS_ID='VB' \
 	  ENVPACKAGE_ID='Wa' \
