@@ -36,8 +36,8 @@ $ rocrateroot="../path_to_analysis_results_repo/crate_results_folder_X"
 $ DOMAIN='https://data.emobon.embrc.eu'
 ### Name of the repository where the analysis results are stored
 $ REPO_NAME='analysis-results-cluster01-crate'
-### Unique identifier for the sample assigned by Genoscope
-$ GENOSCOPE_ID='EMOBON00172'
+### Unique identifier for the sample during analysis, assigned by emo-bon
+$ REF_CODE='EMOBON00172'
 ### Accession number for the sample in the European Nucleotide Archive (ENA)
 $ ENA_NR='test_ENAnummer'
 ### Identifier for the Observatory
