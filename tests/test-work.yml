@@ -17,5 +17,9 @@ subyt:
       path: test-input.txt
       mime: text/csv
       header: code,label,description
+    extra_sources:
+      fake:
+        path: ./unexisting.file
+        mime: text/csv
     sink: test-output2.ttl
     template_name: test-template.ttl
