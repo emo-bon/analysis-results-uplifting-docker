@@ -1,6 +1,10 @@
 # Usage:
 # Make a copy of this file to a local .env file and change settings as needed
 # ----
+# Set the debug level for the process
+#  - if set the logging messages up to that level will be sent to the console(stdout)
+#LOG_LEVEL=DEBUG  # other values INFO, WARNING, ERROR
+# --
 # Set the output_folder to use during test 
 #  - if not set a tmp folder during test will be created and removed
 #TEST_OUTFOLDER=/tmp/test_arup

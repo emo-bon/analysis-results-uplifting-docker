@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 import os
-from logging import Logger, getLogger
+import sys
+from logging import Logger, getLogger, StreamHandler
 from pathlib import Path
 
 import yaml
@@ -196,6 +197,23 @@ class SubytJobs:
         self._subyt()
 
 
+def setup_logging() -> None:
+    loglevel = os.getenv("LOG_LEVEL", None)
+    if loglevel is None:
+        return
+    # else
+    loglevel = loglevel.upper()
+    root_log = getLogger()
+    subyt_log = getLogger("sema.subyt")
+
+    log.setLevel(loglevel)
+    subyt_log.setLevel(loglevel)
+
+    handler = StreamHandler(sys.stdout)
+    handler.setLevel(loglevel)
+    root_log.addHandler(handler)
+
+
 def _main(
     *,
     rocrateroot: str = "/rocrateroot",
@@ -203,6 +221,7 @@ def _main(
     templateroot: str | None = None,
     resultsroot: str | None = None,
 ) -> None:
+    setup_logging()
     rocrateroot = Path(rocrateroot)
 
     # allow env var to be relative to rocrateroot or absolute
