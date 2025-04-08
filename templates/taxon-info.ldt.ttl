@@ -15,7 +15,7 @@ Variable:
 {%- import 'macros/uri.ttl' as uri %}
 
 {%- if ctrl.isFirst %}
-{%- include './includes/prefixes.ttl' %}
+{%- include 'includes/prefixes.ttl' %}
 
 @base <{{ uri_to_crate ~ '/taxonomy-summary' }}> .
 
