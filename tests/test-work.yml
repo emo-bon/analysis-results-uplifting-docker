@@ -2,7 +2,7 @@ vars:
   - name: domain
     value: https://data.emobon.embrc.eu/
   - name: my_var_name
-    value: !resolve "ref:{SAMPLE_MAT_ID}"
+    value: !resolve "ref:{SOURCE_MAT_ID}"
 
 #prepare:
 #  - input: test-input.txt
@@ -14,9 +14,10 @@ subyt:
     sink: test-output.ttl
     template_name: test-template.ttl
   - source:
-      path: test-input.txt
+      path: test-input-tab.txt
       mime: text/csv
-      header: code,label,description
+      delimiter: "\t"
+      header: "code\tlabel\tdescription"
     extra_sources:
       fake:
         path: ./unexisting.file
