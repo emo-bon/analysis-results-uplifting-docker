@@ -33,7 +33,7 @@ docker run --rm \
   --volume ${TMPDIR}:/rocrateroot \
   --env ARUP_WORK=test-work.yml \
   --env ARUP_TEMPLATES=test-templates \
-  --env SAMPLE_MAT_ID='test_sm_id' \
+  --env SOURCE_MAT_ID='test_sm_id' \
   ${dckr_img_nm}
 
 #verify the output
