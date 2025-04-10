@@ -18,6 +18,8 @@ subyt:
       mime: text/csv
       delimiter: "\t"
       header: "code\tlabel\tdescription"
+      comment: "#"
+      skip_blank_lines: true
     extra_sources:
       fake:
         path: ./unexisting.file

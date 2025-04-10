@@ -1,3 +1,7 @@
 be	Belgium	The Kingdom of Belgium is a country in Western Europe.
+# just throwing in a comment, just because we can now
+# same goes for blank lines
+
+
 fr	France	France is a country in Western Europe.
 uk	United Kingdom	The United Kingdom of Great Britain and Northern Ireland.
