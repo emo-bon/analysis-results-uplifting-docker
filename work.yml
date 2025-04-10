@@ -36,28 +36,29 @@ subyt:
         path: ./functional-annotation/DBB.merged.summary.go
         mime: text/csv
         header: ID,sub_process,process,abundance
-      ips_annotations: 
+      ips_annotations:
         path: ./functional-annotation/DBB.merged.summary.ips
         mime: text/csv
         header: Abundance,ID,sequence_domain_region_name
-      kegg_annotations: 
+      kegg_annotations:
         path: ./functional-annotation/DBB.merged.summary.ko
         mime: text/csv
         header: Abundance,ID,name
-      pfam_annotations: 
+      pfam_annotations:
         path: ./functional-annotation/DBB.merged.summary.pfam
         mime: text/csv
         header: Abundance,ID,name
-      eggnog_annotations: 
+      eggnog_annotations:
         path: ./functional-annotation/DBB.merged.emapper.summary.eggnog
         mime: text/csv
         header: Abundance,ID,name
     sink: !resolve ./{REF_CODE}/functional-annotation
     template_name: functional-annotation.ldt.ttl
     mode: no-it
-  - source: 
+  - source:
       path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
       mime: text/csv
       header: OTU_ID,LSU_rRNA,taxonomy,taxid
+      comment: "#"
     sink: !resolve ./{REF_CODE}/taxonomy-summary
     template_name: taxon-info.ldt.ttl
