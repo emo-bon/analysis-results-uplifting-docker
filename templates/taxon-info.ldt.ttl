@@ -1,9 +1,9 @@
 {#- 
 Template: taxon-info.ldt.ttl.j2 
 Description: Template to generate triples taxonomy-summary data resulting from analysis performed on sample; in context of EMOBON.
-Input:
-    - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv
-    (or is it ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv ?)
+Input sets:
+    - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv as slu_taxinfo
+    - ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv as ssu_taxinfo
  
 Variable:
     - uri_to_crate
@@ -24,21 +24,22 @@ Variable:
 .
 {%- endif %}
 
-<#{{_.taxid}}>
+{%- for slu_item in sets['slu_taxinfo'] %}
+<#{{slu_item.taxid}}>
     a prod:TaxonomicAnnotation ; 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
-    {#- unsure if the other properties in file, 'LSU_rRNA' and 'OTU ID', are relevant #}
-    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
-    prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    prod:lsuRNA {{_.LSU_rRNA | xsd("double")}} ; 
+    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{slu_item.taxid}}> ; 
+    prod:otuID {{slu_item.OTU_ID | xsd("integer")}} ; 
+    prod:lsuRNA {{slu_item.rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
+    prov:wasDerivedFrom "SLU file"^^xsd:string ;
 .
 
-{%- if _.taxid %}
-<https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}>
+{%- if slu_item.taxid %}
+<https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{slu_item.taxid}}>
     a dct:Taxon, schema:Taxon ;
-        {%- set taxonomy_array = _.taxonomy.split(';') %}
+        {%- set taxonomy_array = slu_item.taxonomy.split(';') %}
         {%- set taxon_item = taxonomy_array[-1] %}
         {%- set taxon_rank_name = taxon_item.split('__') %}
         {%- set taxon_name = taxon_rank_name[-1] %}
@@ -67,3 +68,50 @@ Variable:
         {%- endif %}
 .
 {%- endif %}
+{%- endfor %}
+
+{%- for ssu_item in sets['ssu_taxinfo'] %}
+<#{{ssu_item.taxid}}>
+    a prod:TaxonomicAnnotation ; 
+    prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
+    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ssu_item.taxid}}> ; 
+    prod:otuID {{ssu_item.OTU_ID | xsd("integer")}} ; 
+    prod:ssuRNA {{ssu_item.rRNA | xsd("double")}} ; 
+
+    dct:isPartOf <> ; 
+    prov:wasDerivedFrom "SSU file"^^xsd:string ;
+.
+
+{%- if ssu_item.taxid %}
+<https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ssu_item.taxid}}>
+    a dct:Taxon, schema:Taxon ;
+        {%- set taxonomy_array = ssu_item.taxonomy.split(';') %}
+        {%- set taxon_item = taxonomy_array[-1] %}
+        {%- set taxon_rank_name = taxon_item.split('__') %}
+        {%- set taxon_name = taxon_rank_name[-1] %}
+        {%- set taxon_rank = taxon_rank_name[-2] %}
+        {%- if taxon_name | length > 0 %}
+        dct:title {{ taxon_name | xsd("string") }} ;
+        dct:scientificName {{ taxon_name | xsd("string") }} ;
+        {%- endif %}
+        
+        {%- if taxon_rank == 'sk' %}
+        dct:taxonRank 'super kingdom'^^xsd:string ;
+        {%- elif taxon_rank == 'k' %}
+        dct:taxonRank 'kingdom'^^xsd:string ;
+        {%- elif taxon_rank == 'p' %}
+        dct:taxonRank 'phylum'^^xsd:string ;
+        {%- elif taxon_rank == 'c' %}
+        dct:taxonRank 'class'^^xsd:string ;
+        {%- elif taxon_rank == 'o' %}
+        dct:taxonRank 'order'^^xsd:string ;
+        {%- elif taxon_rank == 'f' %}
+        dct:taxonRank 'family'^^xsd:string ;
+        {%- elif taxon_rank == 'g' %}
+        dct:taxonRank 'genus'^^xsd:string ;
+        {%- elif taxon_rank == 's' %}
+        dct:taxonRank 'species'^^xsd:string ;
+        {%- endif %}
+.
+{%- endif %}
+{%- endfor %}

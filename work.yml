@@ -55,9 +55,15 @@ subyt:
     sink: !resolve ./{REF_CODE}/functional-annotation
     template_name: functional-annotation.ldt.ttl
     mode: no-it
-  - source: 
-      path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
-      mime: text/csv
-      header: OTU_ID,LSU_rRNA,taxonomy,taxid
+  - extra_sources:
+      slu_taxinfo:
+        path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
+        mime: text/csv
+        header: OTU_ID,rRNA,taxonomy,taxid
+      ssu_taxinfo:
+        path: ./taxonomy-summary/SSU/DBH.merged_LSU.fasta.mseq.csv
+        mime: text/csv
+        header: OTU_ID,rRNA,taxonomy,taxid
     sink: !resolve ./{REF_CODE}/taxonomy-summary
     template_name: taxon-info.ldt.ttl
+    mode: no-it
