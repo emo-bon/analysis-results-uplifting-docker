@@ -33,7 +33,7 @@ Variable:
     prod:lsuRNA {{lsu_item.rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
-    prov:wasDerivedFrom "SLU file"^^xsd:string ;
+    prod:geneticMarker "Large subunit ribosomal RNA gene (LSU)"^^xsd:string ;
 .
 
 {%- if lsu_item.taxid %}
@@ -79,7 +79,7 @@ Variable:
     prod:ssuRNA {{ssu_item.rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
-    prov:wasDerivedFrom "SSU file"^^xsd:string ;
+    prod:geneticMarker "Small subunit ribosomal RNA gene (SSU)"^^xsd:string ;
 .
 
 {%- if ssu_item.taxid %}
