@@ -60,7 +60,7 @@ subyt:
     template_name: functional-annotation.ldt.ttl
     mode: no-it
   - extra_sources:
-      slu_taxinfo:
+      lsu_taxinfo:
         path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
         mime: text/csv
         header: OTU_ID,rRNA,taxonomy,taxid

@@ -2,8 +2,8 @@
 Template: taxon-info.ldt.ttl.j2 
 Description: Template to generate triples taxonomy-summary data resulting from analysis performed on sample; in context of EMOBON.
 Input sets:
-    - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv as slu_taxinfo
-    - ./taxonomy-summary/LSU/DBB.merged_LSU.fasta.mseq.tsv as ssu_taxinfo
+    - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv as lsu_taxinfo
+    - ./taxonomy-summary/SSU/DBB.merged_LSU.fasta.mseq.tsv as ssu_taxinfo
  
 Variable:
     - uri_to_crate
@@ -24,22 +24,22 @@ Variable:
 .
 {%- endif %}
 
-{%- for slu_item in sets['slu_taxinfo'] %}
-<#{{slu_item.taxid}}>
+{%- for lsu_item in sets['lsu_taxinfo'] %}
+<#{{lsu_item.taxid}}>
     a prod:TaxonomicAnnotation ; 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
-    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{slu_item.taxid}}> ; 
-    prod:otuID {{slu_item.OTU_ID | xsd("integer")}} ; 
-    prod:lsuRNA {{slu_item.rRNA | xsd("double")}} ; 
+    dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{lsu_item.taxid}}> ; 
+    prod:otuID {{lsu_item.OTU_ID | xsd("integer")}} ; 
+    prod:lsuRNA {{lsu_item.rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
     prov:wasDerivedFrom "SLU file"^^xsd:string ;
 .
 
-{%- if slu_item.taxid %}
-<https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{slu_item.taxid}}>
+{%- if lsu_item.taxid %}
+<https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{lsu_item.taxid}}>
     a dct:Taxon, schema:Taxon ;
-        {%- set taxonomy_array = slu_item.taxonomy.split(';') %}
+        {%- set taxonomy_array = lsu_item.taxonomy.split(';') %}
         {%- set taxon_item = taxonomy_array[-1] %}
         {%- set taxon_rank_name = taxon_item.split('__') %}
         {%- set taxon_name = taxon_rank_name[-1] %}
