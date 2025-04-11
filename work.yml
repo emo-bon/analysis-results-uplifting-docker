@@ -35,7 +35,11 @@ subyt:
       go_annotations:
         path: ./functional-annotation/DBB.merged.summary.go
         mime: text/csv
-        header: ID,sub_process,process,abundance
+        header: ID,sub_process,process,abundance              #note: header following the structure of example input file
+      goslim_annotations:
+        path: ./functional-annotation/DBB.merged.summary.go_slim
+        mime: text/csv
+        header: ID,sub_process,process,abundance              #note: sub_process ~ name and process ~ aspect in EBI
       ips_annotations: 
         path: ./functional-annotation/DBB.merged.summary.ips
         mime: text/csv

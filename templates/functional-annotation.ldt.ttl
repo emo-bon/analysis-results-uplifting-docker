@@ -3,6 +3,7 @@ Template: functional-annotation.ldt.ttl.j2
 Description: Template to generate triples from functional-analysis results in context of EMOBON.
 Input/Sets:
     - "./functional-annotation/DBB.merged.summary.go" as go_annotations
+    - "./functional-annotation/DBH.merged.summary.go_slim" as goslim_annotations
     - "./functional-annotation/DBB.merged.summary.ips" as ips_annotations
     - "./functional-annotation/DBB.merged.summary.ko" as kegg_annotations
     - "./functional-annotation/DBB.merged.summary.pfam" as pfam_annotations
@@ -35,12 +36,30 @@ Variable:
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
 
     dct:title {{row.sub_process | xsd('string')}} ; 
+    prod:name {{row.sub_process | xsd('string')}} ; 
+    prod:aspect {{row.process | xsd('string')}} ; 
     dct:identifier <https://www.ebi.ac.uk/QuickGO/term/{{row.ID}}> ;
 
     dct:isPartOf <> ; 
 .
 {%- endfor %}
 
+{# GOslim_annotations #}
+{%- for row in sets['goslim_annotations'] %}
+<#{{row.ID}}> 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod:GO_SLIM ; 
+
+    prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
+
+    dct:title {{row.sub_process | xsd('string')}} ; 
+    prod:name {{row.sub_process | xsd('string')}} ; 
+    prod:aspect {{row.process | xsd('string')}} ; 
+    dct:identifier <https://www.ebi.ac.uk/QuickGO/term/{{row.ID}}> ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
 
 {# InterPro_annotations #}
 {%- for row in sets['ips_annotations'] %}
