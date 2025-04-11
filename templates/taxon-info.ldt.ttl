@@ -30,10 +30,10 @@ Variable:
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{lsu_item.taxid}}> ; 
     prod:otuID {{lsu_item.OTU_ID | xsd("integer")}} ; 
-    prod:lsuRNA {{lsu_item.rRNA | xsd("double")}} ; 
+    prod:rRNA {{lsu_item.rRNA | xsd("double")}} ; 
+    prod:geneticMarker prod_vocab:LSU ;
 
     dct:isPartOf <> ; 
-    prod:geneticMarker "Large subunit ribosomal RNA gene (LSU)"^^xsd:string ;
 .
 
 {%- if lsu_item.taxid %}
@@ -76,10 +76,10 @@ Variable:
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{ssu_item.taxid}}> ; 
     prod:otuID {{ssu_item.OTU_ID | xsd("integer")}} ; 
-    prod:ssuRNA {{ssu_item.rRNA | xsd("double")}} ; 
+    prod:rRNA {{ssu_item.rRNA | xsd("double")}} ; 
+    prod:geneticMarker prod_vocab:SSU ;
 
-    dct:isPartOf <> ; 
-    prod:geneticMarker "Small subunit ribosomal RNA gene (SSU)"^^xsd:string ;
+    dct:isPartOf <> ;
 .
 
 {%- if ssu_item.taxid %}
