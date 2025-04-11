@@ -15,3 +15,4 @@
 @prefix core: <https://data.emobon.embrc.eu/ns/core#> .
 @prefix sampling: <https://data.emobon.embrc.eu/ns/sampling#> .
 @prefix prod: <https://data.emobon.embrc.eu/ns/product#> .
+@prefix prod_vocab: <https://data.emobon.embrc.eu/ns/product_vocab#> .

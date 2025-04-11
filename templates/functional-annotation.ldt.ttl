@@ -31,7 +31,7 @@ Variable:
 {%- for row in sets['go_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:GO ; 
+    dct:type prod_vocab:GO ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
 
@@ -48,7 +48,7 @@ Variable:
 {%- for row in sets['goslim_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:GO_SLIM ; 
+    dct:type prod_vocab:GO_SLIM ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
 
@@ -65,7 +65,7 @@ Variable:
 {%- for row in sets['ips_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:InterPro ; 
+    dct:type prod_vocab:InterPro ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;  
 
@@ -80,7 +80,7 @@ Variable:
 {%- for row in sets['kegg_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:KEGG ; 
+    dct:type prod_vocab:KEGG ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
     
@@ -95,7 +95,7 @@ Variable:
 {%- for row in sets['pfam_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:PFAM ; 
+    dct:type prod_vocab:PFAM ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
 
@@ -110,7 +110,7 @@ Variable:
 {%- for row in sets['eggnog_annotations'] %}
 <#{{row.ID}}> 
     a prod:FunctionalAnnotation ; 
-    dct:type prod:EGGNOG ; 
+    dct:type prod_vocab:EGGNOG ; 
 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
 
