@@ -1,5 +1,5 @@
 {#- 
-Template: taxon-info.ldt.ttl.j2 
+Template: taxon-info.ldt.ttl
 Description: Template to generate triples taxonomy-summary data resulting from analysis performed on sample; in context of EMOBON.
 Input:
     - ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.tsv
@@ -17,7 +17,7 @@ Variable:
 {%- if ctrl.isFirst %}
 {%- include 'includes/prefixes.ttl' %}
 
-@base <{{ uri_to_crate ~ '/taxonomy-summary' }}> .
+@base <{{ uri_to_crate ~ '/taxonomy-summary-' ~ su_indicator}}> .
 
 {{ uri.sample(obs_id, env_package, source_mat_id) }}
     rdfs:seeAlso <https://www.ebi.ac.uk/ena/browser/view/{{enanumber}}> ;
@@ -27,10 +27,10 @@ Variable:
 <#{{_.taxid}}>
     a prod:TaxonomicAnnotation ; 
     prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
-    {#- unsure if the other properties in file, 'LSU_rRNA' and 'OTU ID', are relevant #}
+    {#- unsure if the other properties in file, 'SU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    prod:lsuRNA {{_.LSU_rRNA | xsd("double")}} ; 
+    prod:lsuRNA {{_.SU_rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
 .
