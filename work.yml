@@ -58,7 +58,14 @@ subyt:
   - source:
       path: ./taxonomy-summary/LSU/DBH.merged_LSU.fasta.mseq.csv
       mime: text/csv
-      header: OTU_ID,LSU_rRNA,taxonomy,taxid
+      header: OTU_ID,SU_rRNA,taxonomy,taxid
       comment: "#"
-    sink: !resolve ./{REF_CODE}/taxonomy-summary
-    template_name: taxon-info.ldt.ttl
+    sink: !resolve ./{REF_CODE}/taxonomy-summary-LSU
+    template_name: taxon-info-LSU.ldt.ttl
+  - source:
+      path: ./taxonomy-summary/SSU/DBH.merged_SSU.fasta.mseq.csv
+      mime: text/csv
+      header: OTU_ID,SU_rRNA,taxonomy,taxid
+      comment: "#"
+    sink: !resolve ./{REF_CODE}/taxonomy-summary-SSU
+    template_name: taxon-info-SSU.ldt.ttl
