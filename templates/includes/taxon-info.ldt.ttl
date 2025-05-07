@@ -30,7 +30,7 @@ Variable:
     {#- unsure if the other properties in file, 'SU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    prod:lsuRNA {{_.SU_rRNA | xsd("double")}} ; 
+    prod:{{su_indicator | lower ~ "RNA"}} {{_.SU_rRNA | xsd("double")}} ; 
 
     dct:isPartOf <> ; 
 .
