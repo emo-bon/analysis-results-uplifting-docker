@@ -32,38 +32,38 @@ jobs:
 
       - name: Extract tag name
         id: get_tag
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "TAG_NAME=$TAG_NAME" >> "$GITHUB_OUTPUT"
 
       - name: Use tag name
-        run: echo ${{ steps.get_tag.outputs.TAG_NAME }}
+        run: echo "Tag is ${{ steps.get_tag.outputs.TAG_NAME }}"
 
       - name: Disclose the event_name
-        run: echo ${{ github.event_name }}
+        run: echo "${{ github.event_name }}"
 
       - name: Build the Docker image and Push it to the registry-namespace indicated in REG_NS
+        env:
+          REG_NS: ghcr.io/emo-bon/emobon
+          TAG_NAME: ${{ steps.get_tag.outputs.TAG_NAME }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          touch .env                                 # make sure we have one to satisfy the build
-          export REG_NS="ghcr.io/emo-bon/emobon"     # sets the public scope for these
-          TAG_NAME=${GITHUB_REF#refs/tags/}          # this is the tag name of the release
-          echo $TAG_NAME                             # this is the tag name of the release
-          # build tag is the same as tag name for releases if this matches the semver format else it is latest
-
-          # The string you want to check
-
-          # The regular expression
-          regex="^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))?$"
-
+          touch .env
+          echo "Using registry namespace: $REG_NS"
+          echo "Tag name: $TAG_NAME"
+          # Use semver regex to decide if this is a release tag or fallback to 'latest'
+          regex="^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?$"
           if [[ $TAG_NAME =~ $regex ]]; then
-            export BUILD_TAG=$TAG_NAME
+            BUILD_TAG=$TAG_NAME
           else
-            export BUILD_TAG="latest"
+            BUILD_TAG="latest"
           fi
-          echo $BUILD_TAG
-
-          if [[ ${{ github.event_name }} == pull_request ]]; then
-              echo "for pull requests we only build and test"
-              make docker-build docker-test
+          echo "Computed build tag: $BUILD_TAG"
+          
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            echo "Pull request event: building and testing only."
+            make docker-build docker-test
           else
-              echo "for main commits we build, test and push"
-              make docker-push
+            echo "Main/tags push: building, testing, and pushing."
+            make docker-push
           fi
