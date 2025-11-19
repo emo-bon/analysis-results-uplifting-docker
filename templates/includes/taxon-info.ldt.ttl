@@ -32,10 +32,10 @@ Variable:
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
     prod:{{su_indicator | lower ~ "RNA"}} {{_.SU_rRNA | xsd("double")}} ;
 
-    {%- if su_indicator = 'LSU' %}
+    {%- if su_indicator == 'LSU' %}
     prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015934> ;
     {%- endif %}
-    {%- if su_indicator = 'SSU' %}
+    {%- if su_indicator == 'SSU' %}
     prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015935> ;
     {%- endif }
 
