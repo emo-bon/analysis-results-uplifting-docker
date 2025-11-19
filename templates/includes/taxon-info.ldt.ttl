@@ -37,7 +37,7 @@ Variable:
     {%- endif %}
     {%- if su_indicator == 'SSU' %}
     prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015935> ;
-    {%- endif }
+    {%- endif %}
 
     dct:isPartOf <> ; 
 .
