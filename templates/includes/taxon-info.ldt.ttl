@@ -17,10 +17,10 @@ Variable:
 {%- if ctrl.isFirst %}
 {%- include 'includes/prefixes.ttl' %}
 
-@base <{{ uri_to_crate ~ '/taxonomy-summary-' ~ su_indicator}}> .
+@base <{{ uri_to_crate ~ '/taxonomy-summary-' ~ su_indicator ~ '/' ~ su_indicator ~ '-taxonomy-summary'}}> .
 
 {{ uri.sample(obs_id, env_package, source_mat_id) }}
-    rdfs:seeAlso <https://www.ebi.ac.uk/ena/browser/view/{{enanumber}}> ;
+    rdfs:seeAlso {{ "https://www.ebi.ac.uk/ena/browser/view/" ~ enanumber | uri }} ;
 .
 {%- endif %}
 
@@ -30,7 +30,14 @@ Variable:
     {#- unsure if the other properties in file, 'SU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    prod:{{su_indicator | lower ~ "RNA"}} {{_.SU_rRNA | xsd("double")}} ; 
+    prod:{{su_indicator | lower ~ "RNA"}} {{_.SU_rRNA | xsd("double")}} ;
+
+    {%- if su_indicator = 'LSU' %}
+    prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015934> ;
+    {%- endif %}
+    {%- if su_indicator = 'SSU' %}
+    prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015935> ;
+    {%- endif }
 
     dct:isPartOf <> ; 
 .
@@ -64,6 +71,17 @@ Variable:
         dct:taxonRank 'genus'^^xsd:string ;
         {%- elif taxon_rank == 's' %}
         dct:taxonRank 'species'^^xsd:string ;
+        {%- endif %}
+
+        {%- if taxon_classification | length > 0 %}
+        {%- set clean_classification = [] %}
+            {%- for level in taxon_classification %}
+                {%- set level_rank_name = level.split('__') %}
+                {%- set level_name = level_rank_name[-1] %}
+                {{ clean_classification.append(level_name) }}
+            {%- endfor %}
+
+        dwc:higherClassification {{ clean_classification.join(' | ') | xsd("string") }} ;
         {%- endif %}
 .
 {%- endif %}
