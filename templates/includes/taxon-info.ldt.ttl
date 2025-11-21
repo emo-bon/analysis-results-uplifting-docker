@@ -20,7 +20,7 @@ Variable:
 @base <{{ uri_to_crate ~ '/taxonomy-summary-' ~ su_indicator ~ '/' ~ su_indicator ~ '-taxonomy-summary'}}> .
 
 {{ uri.sample(obs_id, env_package, source_mat_id) }}
-    rdfs:seeAlso {{ "https://www.ebi.ac.uk/ena/browser/view/" ~ enanumber | uri }} ;
+    rdfs:seeAlso {{ ("https://www.ebi.ac.uk/ena/browser/view/" ~ enanumber) | uri }} ;
 .
 {%- endif %}
 
@@ -30,7 +30,7 @@ Variable:
     {#- unsure if the other properties in file, 'SU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
-    prod:{{su_indicator | lower ~ "RNA"}} {{_.SU_rRNA | xsd("double")}} ;
+    prod:rRNA {{_.SU_rRNA | xsd("double")}} ;
 
     {%- if su_indicator == 'LSU' %}
     prod:geneticMarker <http://purl.obolibrary.org/obo/GO_0015934> ;
@@ -47,6 +47,7 @@ Variable:
     a dct:Taxon, schema:Taxon ;
         {%- set taxonomy_array = _.taxonomy.split(';') %}
         {%- set taxon_item = taxonomy_array[-1] %}
+        {%- set taxon_classification = taxonomy_array[:-1] %}
         {%- set taxon_rank_name = taxon_item.split('__') %}
         {%- set taxon_name = taxon_rank_name[-1] %}
         {%- set taxon_rank = taxon_rank_name[-2] %}
