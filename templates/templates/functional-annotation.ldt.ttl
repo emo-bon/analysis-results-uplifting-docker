@@ -1,0 +1,122 @@
+{#- 
+Template: functional-annotation.ldt.ttl.j2 
+Description: Template to generate triples from functional-analysis results in context of EMOBON.
+Input/Sets:
+    - "./functional-annotation/DBB.merged.summary.go" as go_annotations
+    - "./functional-annotation/DBH.merged.summary.go_slim" as goslim_annotations
+    - "./functional-annotation/DBB.merged.summary.ips" as ips_annotations
+    - "./functional-annotation/DBB.merged.summary.ko" as kegg_annotations
+    - "./functional-annotation/DBB.merged.summary.pfam" as pfam_annotations
+    - "./DBB.merged.emapper.summary.eggnog" as eggnog_annotations
+
+Variable:
+    - uri_to_crate
+    - enanumber
+    - obs_id
+    - env_package
+    - source_mat_id
+-#}
+
+{%- import 'macros/refs.ttl' as refs %}
+
+{%- include './includes/prefixes.ttl' %}
+
+@base {{ uri_to_crate ~ '/functional-annotation/functional-annotation' | uri }} .
+
+{{ refs.sample(obs_id, env_package, source_mat_id) }}
+    rdfs:seeAlso {{ "https://www.ebi.ac.uk/ena/browser/view/" ~ enanumber | uri }} ;
+. 
+
+{# GO_annotations #}
+{%- for row in sets['go_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:GO ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
+
+    dct:title {{row.sub_process | xsd('string')}} ; 
+    prod:name {{row.sub_process | xsd('string')}} ; 
+    prod:aspect {{row.process | xsd('string')}} ; 
+    dct:identifier {{ "https://www.ebi.ac.uk/QuickGO/term/" ~ row.ID | uri }} ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
+
+{# GOslim_annotations #}
+{%- for row in sets['goslim_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:GO_SLIM ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
+
+    dct:title {{row.sub_process | xsd('string')}} ; 
+    prod:name {{row.sub_process | xsd('string')}} ; 
+    prod:aspect {{row.process | xsd('string')}} ; 
+    dct:identifier {{ "https://www.ebi.ac.uk/QuickGO/term/" ~ row.ID | uri }} ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
+
+{# InterPro_annotations #}
+{%- for row in sets['ips_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:InterPro ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;  
+
+    dct:title {{row['sequence_domain_region_name'] | xsd('string')}} ;
+    dct:identifier {{ "https://www.ebi.ac.uk/interpro/entry/InterPro/" ~ row.ID | uri }} ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
+
+{# KEGG_annotations #}
+{%- for row in sets['kegg_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:KEGG ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
+    
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier {{ "https://www.genome.jp/dbget-bin/www_bget?" ~ row.ID | uri }} ;  
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
+
+{# PFAM_annotations #}
+{%- for row in sets['pfam_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:PFAM ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
+
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier {{ "https://www.ebi.ac.uk/interpro/entry/pfam/" ~ row.ID | uri }} ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}
+
+{# EGGNOG_annotations #}
+{%- for row in sets['eggnog_annotations'] %}
+{{ "#" ~ row.ID | uri }} 
+    a prod:FunctionalAnnotation ; 
+    dct:type prod_vocab:EGGNOG ; 
+
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
+
+    dct:title {{row.name | xsd('string')}} ; 
+    dct:identifier {{ "http://eggnog6.embl.de/search/ogs/" ~ row.ID ~ "/" | uri }} ;
+
+    dct:isPartOf <> ; 
+.
+{%- endfor %}

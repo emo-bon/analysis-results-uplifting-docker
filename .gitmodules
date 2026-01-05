@@ -1,0 +1,3 @@
+[submodule "analysis-results-profile"]
+	path = analysis-results-profile
+	url = git@github.com:emo-bon/analysis-results-profile

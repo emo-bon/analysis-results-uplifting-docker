@@ -12,21 +12,21 @@ Variable:
     - env_package
     - source_mat_id
 -#}
-{%- import 'macros/uri.ttl' as uri %}
+{%- import 'macros/refs.ttl' as refs %}
 
 {%- if ctrl.isFirst %}
 {%- include 'includes/prefixes.ttl' %}
 
 @base <{{ uri_to_crate ~ '/taxonomy-summary-' ~ su_indicator ~ '/' ~ su_indicator ~ '-taxonomy-summary'}}> .
 
-{{ uri.sample(obs_id, env_package, source_mat_id) }}
+{{ refs.sample(obs_id, env_package, source_mat_id) }}
     rdfs:seeAlso {{ ("https://www.ebi.ac.uk/ena/browser/view/" ~ enanumber) | uri }} ;
 .
 {%- endif %}
 
 <#{{_.taxid}}>
     a prod:TaxonomicAnnotation ; 
-    prod:ofSample {{ uri.sample(obs_id, env_package, source_mat_id) }} ;
+    prod:ofSample {{ refs.sample(obs_id, env_package, source_mat_id) }} ;
     {#- unsure if the other properties in file, 'SU_rRNA' and 'OTU ID', are relevant #}
     dct:identifier <https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{_.taxid}}> ; 
     prod:otuID {{_.OTU_ID | xsd("integer")}} ; 
