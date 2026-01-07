@@ -6,6 +6,7 @@ dckr_img_nm=${2:-"emobon_arup:latest"}
 
 #check for .env file and use it if available
 if [[ -f .env ]]; then
+  echo "found .env - so sourcing it..."
   source .env
 fi
 #create temp space if not provided from env

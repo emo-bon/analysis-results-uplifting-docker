@@ -7,7 +7,7 @@
 # --
 # Set the output_folder to use during test 
 #  - if not set a tmp folder during test will be created and removed
-#TEST_OUTFOLDER=/tmp/test_arup
+#TEST_OUTPUTFOLDER=/tmp/test_arup
 # --
 # Set the docker-guest /path/to/the/work.yml to use in processing
 #  - relative paths are resolved vs. /rocrateroot
