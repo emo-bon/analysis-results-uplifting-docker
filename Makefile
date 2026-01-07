@@ -66,6 +66,7 @@ clean: ## [  py] Cleans the python environment for the project
 # usage `make BUILD_TAG=0.2 docker-build` to include a specific tag to the build docker images
 docker-build: ## [dckr] Builds the docker-image
 	@echo "building the arup image with  tag: -t ${V_TAG}"
+	@git submodule update --init --recursive
 	@env docker build -t ${V_TAG} --no-cache .
 	
 docker-test: ## [dckr] Launches local-named variants of the containers/images in docker-compose.yml
