@@ -57,6 +57,11 @@ Taking this route assumes you have this project checked out with git, and have b
 You might want to check the "developer info" section below for how to do that.
 
 ```sh
+# build the docker image
+# first get/update the git submodules from this repo
+$ git submodule update --init --recursive
+$ docker build -t emobon_arup .
+
 # (optionally) verify if you have the local image available
 $ docker images |grep emobon_arup  # should return a matching image
 
