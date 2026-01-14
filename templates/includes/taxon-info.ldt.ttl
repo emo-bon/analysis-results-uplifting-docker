@@ -75,14 +75,17 @@ Variable:
         {%- endif %}
 
         {%- if taxon_classification | length > 0 %}
-        {%- set clean_classification = [] %}
-            {%- for level in taxon_classification %}
-                {%- set level_rank_name = level.split('__') %}
-                {%- set level_name = level_rank_name[-1] %}
-                {{ clean_classification.append(level_name) }}
-            {%- endfor %}
+	{%- set classification_string = namespace(value='') %}
+   	{%- for level in taxon_classification %}
+          {%- set level_name = level.split('__')[-1] %}
+          {%- if loop.first %}
+	    {%- set classification_string.value = level_name %}
+          {%- else %}
+            {%- set classification_string.value = classification_string.value + ' | ' + level_name %}
+          {%- endif %}
+    	{%- endfor %}
 
-        dwc:higherClassification {{ clean_classification.join(' | ') | xsd("string") }} ;
+        dwc:higherClassification {{ classification_string.value  | xsd("string") }} ;
         {%- endif %}
 .
 {%- endif %}
